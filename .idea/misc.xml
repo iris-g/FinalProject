@@ -3,6 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/irbte/AndroidStudioProjects/FinalProjectAndroid/app/src/main/res/drawable/btn_gradient_style.xml" value="0.1" />
+        <entry key="..\:/Users/irbte/AndroidStudioProjects/FinalProjectAndroid/app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.1" />
+        <entry key="..\:/Users/irbte/AndroidStudioProjects/FinalProjectAndroid/app/src/main/res/drawable/indicator_default.xml" value="0.1" />
+        <entry key="..\:/Users/irbte/AndroidStudioProjects/FinalProjectAndroid/app/src/main/res/drawable/indicator_selected.xml" value="0.22" />
+        <entry key="..\:/Users/irbte/AndroidStudioProjects/FinalProjectAndroid/app/src/main/res/drawable/indicator_selector.xml" value="0.18" />
+        <entry key="..\:/Users/irbte/AndroidStudioProjects/FinalProjectAndroid/app/src/main/res/layout/activity_intro.xml" value="0.33" />
+        <entry key="..\:/Users/irbte/AndroidStudioProjects/FinalProjectAndroid/app/src/main/res/layout/activity_main.xml" value="0.1762917933130699" />
+        <entry key="..\:/Users/irbte/AndroidStudioProjects/FinalProjectAndroid/app/src/main/res/layout/info1.xml" value="0.271286231884058" />
+        <entry key="..\:/Users/irbte/AndroidStudioProjects/FinalProjectAndroid/app/src/main/res/layout/info2.xml" value="0.271286231884058" />
+        <entry key="..\:/Users/irbte/AndroidStudioProjects/FinalProjectAndroid/app/src/main/res/layout/info3.xml" value="0.271286231884058" />
         <entry key="..\:/Users/sharo/AndroidStudioProjects/FinalProject/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="..\:/Users/sharo/AndroidStudioProjects/FinalProject/app/src/main/res/drawable/custom_round_button.xml" value="0.1" />
         <entry key="..\:/Users/sharo/AndroidStudioProjects/FinalProject/app/src/main/res/drawable/edit_text_background.xml" value="0.16666666666666666" />
