@@ -9,9 +9,6 @@
             android:useLevel="false">
 
             <solid android:color="@color/tab_indicator_gray" />
-
-
-
         </shape>
 
 

@@ -1,11 +1,11 @@
 package com.example.finalproject;
 
-public class ScreenItem {
+public class ViewPagerItem {
 
     String Title,Description;
     int ScreenImg;
 
-    public ScreenItem(String title, String description, int screenImg) {
+    public ViewPagerItem(String title, String description, int screenImg) {
         Title = title;
         Description = description;
         ScreenImg = screenImg;
