@@ -3,6 +3,7 @@ package com.example.finalproject;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,7 +18,7 @@ public class UserSettings extends AppCompatActivity {
     CircleImageView userImg;
     ImageButton btnAddPic;
 
-    SharedPreferences sharedPreferences;
+    SharedPreferences app_preferences;
     SharedPreferences.Editor editor;
     int appColor;
 
@@ -25,15 +26,15 @@ public class UserSettings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         /**---Reading--- from Shared Preference*/
-       // app_preferences = PreferenceManager.getDefaultSharedPreferences(this);
-       // appColor = app_preferences.getInt("color", -9391916);
+       app_preferences = UserSettings.this.getSharedPreferences("UserSettings", Context.MODE_PRIVATE);
+       appColor = app_preferences.getInt("color", 0);
 
         setContentView(R.layout.user_settings);
 
 
         /**finding the user profile picture*/
         userImg = findViewById(R.id.userImage);
-     //   userImg.setBorderColor(appColor);
+        userImg.setBorderColor(appColor);
 
         /**btnAddPic*/
         btnAddPic = findViewById(R.id.btnAddPic);
