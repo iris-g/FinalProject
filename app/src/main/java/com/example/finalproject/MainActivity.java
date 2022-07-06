@@ -1,10 +1,18 @@
 package com.example.finalproject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,26 +22,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_intro);
-        ViewPager2 viewPager2 = findViewById(R.id.viewPager);
-        final List<ViewPagerItem> mList = new ArrayList<>();
-        mList.add(new ViewPagerItem("Create","Create an organized, convenient and easy-to-use list for all of your shopping",R.drawable.create));
-        mList.add(new ViewPagerItem("Share","Sync your list with others and keep them updated at every step",R.drawable.connection));
-        mList.add(new ViewPagerItem("Perform","Shop easily: alone or with friends",R.drawable.preform));
+        setContentView(R.layout.create_new_list);
+        Button addBtn = findViewById(R.id.btn_add);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                    Intent ListActivity = new Intent(getApplicationContext(),CreateListActivity.class);
+                    startActivity(ListActivity);
+                    finish();
 
+                }
 
-        VPAdapter vpAdapter = new VPAdapter(mList);
+        });
 
-        viewPager2.setAdapter(vpAdapter);
-
-        viewPager2.setClipToPadding(false);
-
-        viewPager2.setClipChildren(false);
-
-        viewPager2.setOffscreenPageLimit(2);
-
-        viewPager2.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
     }
 
 //    public void showToast()
