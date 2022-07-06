@@ -18,7 +18,7 @@ import java.util.List;
 public class CreateListActivity extends AppCompatActivity {
     List<String> shoppingList;
     TextView listTitle ;
-    Button createBtn = findViewById(R.id.create_button);
+    Button createBtn ;
     DatabaseReference refernce;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,8 @@ public class CreateListActivity extends AppCompatActivity {
         setContentView(R.layout.set_new_list_title);
         listTitle=findViewById(R.id.listTitleEditText);
         shoppingList= new ArrayList<>();
-        refernce = FirebaseDatabase.getInstance().getReference().child("Time");
+       // refernce = FirebaseDatabase.getInstance().getReference().child("Time");
+         createBtn = findViewById(R.id.create_button);
 
 
         createBtn.setOnClickListener(new View.OnClickListener() {
@@ -34,16 +35,16 @@ public class CreateListActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 String inputText = listTitle.getText().toString();
+                /* need to add a check if the list already exists  */
                 if( !inputText.equals("")) {
 
+                    Intent editListActivity = new Intent(getApplicationContext(),EditListActivity.class);
+                    startActivity(editListActivity);
+                    finish();
 
 
                 }
-                /* if we reached last intro screen and next pressed open main layout  */
-                    Intent mainActivity = new Intent(getApplicationContext(),MainActivity.class);
-                    startActivity(mainActivity);
 
-                    finish();
 
 
 

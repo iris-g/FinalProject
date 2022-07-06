@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
                     Intent ListActivity = new Intent(getApplicationContext(),CreateListActivity.class);
                     startActivity(ListActivity);
                     finish();
-
                 }
 
         });
