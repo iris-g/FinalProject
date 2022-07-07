@@ -10,19 +10,30 @@
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="1dp">
+        tools:layout_editor_absoluteX="1dp"
+        tools:ignore="MissingConstraints">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="328dp"
-            android:layout_height="37dp"
-            android:hint="add item" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputEditText
-        android:layout_width="342dp"
-        android:layout_height="35dp"
+        android:id="@+id/description_data"
+        android:layout_width="374dp"
+        android:layout_height="79dp"
         android:layout_marginTop="104dp"
         android:hint="type, amount , notes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-        tools:layout_editor_absoluteX="1dp" />
+        app:layout_constraintVertical_bias="0.033" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/item_name"
+        android:layout_width="362dp"
+        android:layout_height="65dp"
+        android:hint="add item"
+        app:layout_constraintBottom_toTopOf="@+id/description_data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

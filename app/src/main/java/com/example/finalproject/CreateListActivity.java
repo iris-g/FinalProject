@@ -37,8 +37,10 @@ public class CreateListActivity extends AppCompatActivity {
                 if( !inputText.equals("")) {
 
                     Intent editListActivity = new Intent(getApplicationContext(),EditListActivity.class);
+
+                    editListActivity.putExtra("name", inputText );
                     startActivity(editListActivity);
-                    finish();
+                    //finish();
 
 
                 }

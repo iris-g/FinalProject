@@ -39,20 +39,6 @@
         app:layout_constraintStart_toStartOf="@+id/btn_get_started"
         app:layout_constraintTop_toBottomOf="@+id/viewPager" />
 
-    <TextView
-        android:id="@+id/tv_skip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:text="Skip"
-        android:textColor="#2d2d2d"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_indicator"
         android:layout_width="184dp"
@@ -84,13 +70,17 @@
 
     <Button
         android:id="@+id/btn_get_started"
-        android:layout_width="144dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="48dp"
-        android:background="@drawable/btn_gradient_style"
-        android:text="Get Started"
-        android:textColor="#fff"
-        android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@+id/viewPager"
-        tools:layout_editor_absoluteX="209dp" />
+        android:layout_width="102dp"
+        android:layout_height="38dp"
+        android:layout_marginBottom="15dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:text="Skip"
+        android:textColor="#000000"
+
+        app:layout_constraintBottom_toTopOf="@+id/viewPager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.976"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.941" />
 </androidx.constraintlayout.widget.ConstraintLayout>
