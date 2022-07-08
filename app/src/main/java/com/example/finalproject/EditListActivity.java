@@ -87,9 +87,6 @@ public class EditListActivity extends AppCompatActivity {
                 dialog.show();
 
             }
-
-
-
         });
     }
 

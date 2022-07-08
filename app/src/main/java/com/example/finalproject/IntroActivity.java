@@ -25,11 +25,12 @@ public class IntroActivity extends AppCompatActivity {
 
         ViewPager2 viewPager2 = findViewById(R.id.viewPager);
         Button nextBtn = findViewById(R.id.btn_next);
-         skipBtn = findViewById(R.id.btn_get_started);
+        skipBtn = findViewById(R.id.btn_get_started);
+
         final List<ViewPagerItem> mList = new ArrayList<>();
-        mList.add(new ViewPagerItem("Create", "Create an organized, convenient and easy-to-use list for all of your shopping", R.drawable.create));
+        mList.add(new ViewPagerItem("Create", "Create an organized, convenient and easy to use list for all of your shopping", R.drawable.create));
         mList.add(new ViewPagerItem("Share", "Sync your list with others and keep them updated at every step", R.drawable.connection));
-        mList.add(new ViewPagerItem("Perform", "Shop easily: alone or with friends", R.drawable.preform));
+        mList.add(new ViewPagerItem("Perform", "Make your shopping experience much easier to shop alone or with friends", R.drawable.preform));
 
         /* create an adapter for the view pagers item list */
         VPAdapter vpAdapter = new VPAdapter(mList);

@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    android:background="@color/t_blue">
+    android:padding="20dp">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="Your Name"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/nexa_bold"
-        android:textSize="30dp"/>
+        android:text="Your Name"
+        android:textSize="30dp" />
 
 
 

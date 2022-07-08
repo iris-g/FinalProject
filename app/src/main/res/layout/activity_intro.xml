@@ -9,46 +9,44 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
-        android:layout_width="360dp"
-        android:layout_height="417dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.255"
-        tools:layout_editor_absoluteX="5dp">
+        android:layout_width="410dp"
+        android:layout_height="475dp"
+        android:layout_marginBottom="14dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_get_started">
 
 
     </androidx.viewpager2.widget.ViewPager2>
 
     <Button
         android:id="@+id/btn_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="75dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="4dp"
-        android:background="#fff"
+        android:layout_width="375dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="4dp"
+        android:background="#7086D4"
         android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
-        android:drawableTint="@color/gradient_start_color"
-        android:text="Next"
-        android:textColor="@color/gradient_start_color"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:drawableTint="@color/colorAccent"
+        android:text="Continue"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/tab_indicator"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.995"
-        app:layout_constraintStart_toEndOf="@+id/tab_indicator"
-        app:layout_constraintStart_toStartOf="@+id/btn_get_started"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewPager" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_indicator"
         android:layout_width="184dp"
         android:layout_height="40dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="52dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_next"
-        app:layout_constraintTop_toBottomOf="@+id/viewPager"
-        app:tabBackground="@drawable/indicator_selector">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_next"
+        app:tabBackground="@drawable/indicator_selector"
+        app:tabIndicatorColor="#00FFFFFF">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -72,15 +70,14 @@
         android:id="@+id/btn_get_started"
         android:layout_width="102dp"
         android:layout_height="38dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginStart="310dp"
+
         android:background="?attr/selectableItemBackgroundBorderless"
         android:text="Skip"
         android:textColor="#000000"
-
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/viewPager"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.976"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.941" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

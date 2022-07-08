@@ -2,16 +2,22 @@ package com.example.finalproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener;
+import org.w3c.dom.Text;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
@@ -25,22 +31,21 @@ public class MainActivity extends AppCompatActivity {
         /**Hooks*/
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-        toolbar = findViewById(R.id.toolbar);
+                toolbar = findViewById(R.id.toolbar);
         /****/
 
         /**Tool Bar**/
         setSupportActionBar(toolbar);
         /***/
+        navigationView.bringToFront();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(toggle);
 
         toggle.syncState();
 
-
-
-
-
+        //making the navigation bar clickable
+        navigationView.setNavigationItemSelectedListener(this);
 
 
         Button addBtn = findViewById(R.id.btn_add);
@@ -56,7 +61,26 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    public void showToast()
+    @Override
+    public void onBackPressed() {
+        //if the drawer is open
+        if(drawerLayout.isDrawerOpen(GravityCompat.START))
+        {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        else
+        {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return true;
+    }
+
+
+    //    public void showToast()
 //    {
 //        LayoutInflater layoutInflater = getLayoutInflater();
 //        View layout = layoutInflater.inflate(R.layout.toast_layout,

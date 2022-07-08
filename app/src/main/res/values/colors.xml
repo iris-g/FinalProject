@@ -25,7 +25,8 @@
     <color name="t_purple">#9E73D6</color>
     <!-- colors for tab and screent text -->
 
-    <color name="tab_indicator_gray">#c0c0c0</color>
+    <color name="tab_indicator_selected">#ED766F</color>
+    <color name="tab_indicator_gray">#C4C4C4</color>
     <color name="intro_title_color">#000000</color>
     <color name="intro_description_color">#656565</color>
 
