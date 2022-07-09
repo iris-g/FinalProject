@@ -35,7 +35,10 @@ dependencies {
 
     //adding circle image view
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    implementation 'com.google.firebase:firebase-database:20.0.0'
+    def room_version = "2.4.2"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
