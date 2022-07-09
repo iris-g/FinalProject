@@ -34,7 +34,7 @@ public class UserSettingsActivity extends DrawerBaseActivity {
         allocateActivityTitle("");
 
         /**---Reading--- from Shared Preference*/
-        app_preferences = this.getSharedPreferences("UserSettings", Context.MODE_PRIVATE);
+        app_preferences = this.getSharedPreferences("UserSettingsActivity", Context.MODE_PRIVATE);
         appColor = app_preferences.getInt("color", 0);
 
         /**finding the user profile picture*/
