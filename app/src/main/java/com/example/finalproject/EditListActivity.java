@@ -27,7 +27,7 @@ public class EditListActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main1);
         addBtn = findViewById(R.id.add_btn);
         rvItems=findViewById(R.id.recycler_view);
         items=findViewById(R.id.items_num);

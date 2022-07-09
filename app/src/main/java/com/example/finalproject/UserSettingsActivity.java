@@ -1,5 +1,7 @@
 package com.example.finalproject;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,32 +9,36 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.finalproject.databinding.ActivityUserSettingsBinding;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UserSettings extends AppCompatActivity {
+public class UserSettingsActivity extends DrawerBaseActivity {
+
+   ActivityUserSettingsBinding activityUserSettingsBinding;
 
     Button btnOrange,btnYellow,btnGreen,btnBlue,btnPink,btnPurple;
     CircleImageView userImg;
     ImageButton btnAddPic;
 
+
     SharedPreferences app_preferences;
     SharedPreferences.Editor editor;
     int appColor;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activityUserSettingsBinding = ActivityUserSettingsBinding.inflate(getLayoutInflater());
+        setContentView(activityUserSettingsBinding.getRoot());
+        allocateActivityTitle("");
 
         /**---Reading--- from Shared Preference*/
-       app_preferences = UserSettings.this.getSharedPreferences("UserSettings", Context.MODE_PRIVATE);
-       appColor = app_preferences.getInt("color", 0);
-
-        setContentView(R.layout.user_settings);
-
+        app_preferences = this.getSharedPreferences("UserSettings", Context.MODE_PRIVATE);
+        appColor = app_preferences.getInt("color", 0);
 
         /**finding the user profile picture*/
-        userImg = findViewById(R.id.userImage);
+        userImg = findViewById(R.id.user_image);
         userImg.setBorderColor(appColor);
 
         /**btnAddPic*/

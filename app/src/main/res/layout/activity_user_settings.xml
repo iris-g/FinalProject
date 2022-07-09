@@ -4,10 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
-    android:layout_marginBottom="5dp"
+    tools:context=".UserSettingsActivity"
     android:background="#F6F5F5">
-
 
     <TextView
         android:id="@+id/textView7"
@@ -49,14 +47,14 @@
         android:textColor="#000000"
         android:textSize="44sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/userImage"
+        app:layout_constraintBottom_toTopOf="@+id/user_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/userImage"
+        android:id="@+id/user_image"
         android:layout_width="240dp"
         android:layout_height="240dp"
         android:layout_centerInParent="true"
@@ -78,7 +76,7 @@
         app:layout_constraintEnd_toStartOf="@+id/textView4"
         app:layout_constraintHorizontal_bias="0.843"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userImage"
+        app:layout_constraintTop_toBottomOf="@+id/user_image"
         app:layout_constraintVertical_bias="0.343"
         app:srcCompat="@drawable/ic_edit"
         app:tint="#000000" />
@@ -160,11 +158,11 @@
         android:backgroundTint="#C4C4C4"
         android:src="@drawable/ic_camera"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/userImage"
-        app:layout_constraintEnd_toEndOf="@+id/userImage"
+        app:layout_constraintBottom_toBottomOf="@+id/user_image"
+        app:layout_constraintEnd_toEndOf="@+id/user_image"
         app:layout_constraintHorizontal_bias="0.924"
-        app:layout_constraintStart_toStartOf="@+id/userImage"
-        app:layout_constraintTop_toTopOf="@+id/userImage"
+        app:layout_constraintStart_toStartOf="@+id/user_image"
+        app:layout_constraintTop_toTopOf="@+id/user_image"
         app:layout_constraintVertical_bias="1.0" />
 
     <View
