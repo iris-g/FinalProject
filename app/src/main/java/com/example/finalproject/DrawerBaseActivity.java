@@ -29,14 +29,16 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
 
         Toolbar toolbar = drawerLayout.findViewById(R.id.myToolBar);
         setSupportActionBar(toolbar);
-//        imageButton = drawerLayout.findViewById(R.id.homeButton);
-//        imageButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent myIntent = new Intent(DrawerBaseActivity.this, MainActivity.class);
-//                DrawerBaseActivity.this.startActivity(myIntent);
-//            }
-//        });
+
+
+        imageButton = drawerLayout.findViewById(R.id.homeButton);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(DrawerBaseActivity.this, MainActivity.class);
+                DrawerBaseActivity.this.startActivity(myIntent);
+            }
+       });
 
         //making the navigation bar clickable
         NavigationView navigationView = drawerLayout.findViewById(R.id.nav_view);
