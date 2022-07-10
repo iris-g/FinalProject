@@ -25,12 +25,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     Context context;
     ArrayList<Item> shownItems;
     TextView items;
+    AppDataBase db;
 
     public RecyclerViewAdapter(ViewModel model, Context context) {
         this.model= new ViewModelProvider((FragmentActivity)context).get(ViewModel.class);
         this.context=context;
         shownItems = new ArrayList<Item>();
-
+        db  = AppDataBase.getDbInstance(context);
         //generate live data objects
         model.getSelectedRow();
         model.getItems();
@@ -102,6 +103,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public void bindData(final int position) {
            final Item item = shownItems.get(position);
+            model.setItemsCount(shownItems.size());
             tvName.setText(item.getName());
             tvShort.setText(item.getDetails());
             itemView.setOnLongClickListener(new View.OnLongClickListener()
@@ -123,6 +125,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private void OnItemLongClick(int position) {
             notifyDataSetChanged();
             Item item1 = shownItems.get(position);
+            String name = item1.name;
+            Items item=db.listDao().getItem(name);
+            db.listDao().deleteItem(item);
             shownItems.remove(item1);
             model.setItems(shownItems);
             model.setItemsCount(shownItems.size());

@@ -7,45 +7,59 @@
     android:layout_margin="20dp"
     android:background="#F6F5F5"
     tools:context=".MainActivity">
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="250dp"
-            android:layout_height="269dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.326"
-            app:srcCompat="@drawable/create_new_list2" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="250dp"
-            android:layout_height="42dp"
-            android:text="Create new list"
-            android:textAlignment="center"
-            android:textColor="#3D578B"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
-            app:layout_constraintVertical_bias="0.0" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="250dp"
+        android:layout_height="269dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.037"
+        app:srcCompat="@drawable/create_new_list2" />
 
-        <Button
-            android:id="@+id/btn_add"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/custom_round_button"
-            android:text="+"
-            android:textColor="#FFFFFF"
-            android:textSize="34sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:layout_constraintVertical_bias="0.683" />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="315dp"
+        android:layout_height="33dp"
+        android:text="Create new list"
+        android:textAlignment="center"
+        android:textColor="#3D578B"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.0" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/custom_round_button"
+        android:text="+"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.84" />
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="369dp"
+        android:layout_height="203dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.223" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 

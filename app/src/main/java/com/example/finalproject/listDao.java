@@ -15,14 +15,26 @@ public interface listDao {
     List<ShoppingList> getAllItemsList();
 
     @Insert
-    void insertItems(ShoppingList items);
+    void insertLists(ShoppingList items);
 
-    @Update
-    void updateItems(ShoppingList items);
+    @Query("Select * from Items where listName = :list_Name")
+    List<Items> getAllItemsList(String list_Name);
+
+    @Query("Select * from Items where itemName = :item_name")
+    Items getItem(String item_name);
+
 
     @Delete
-    void deleteItem(ShoppingList items);
+    void deleteLists(ShoppingList items);
 
 
+    @Insert
+    void insertItems(Items items);
+
+    @Update
+    void updateItems(Items items);
+
+    @Delete
+    void deleteItem(Items items);
 }
 

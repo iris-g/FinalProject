@@ -37,4 +37,26 @@
         android:textColor="#FFFFFF"
         android:textSize="12sp"
         android:textStyle="bold|italic" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="68dp"
+        android:layout_height="39dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="266dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="-5dp"
+        android:layout_toEndOf="@+id/flag"
+        android:button="@android:drawable/checkbox_on_background"
+        android:checked="false"
+        android:contextClickable="false"
+        android:editable="true"
+        android:foregroundGravity="right"
+        android:gravity="right"
+        android:paddingRight="24dp"
+        android:textSize="20sp" />
+
 </RelativeLayout>
