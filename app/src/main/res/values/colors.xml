@@ -30,4 +30,7 @@
     <color name="intro_title_color">#000000</color>
     <color name="intro_description_color">#656565</color>
 
+    <color name="pic_btn_color">#313435</color>
+
+
 </resources>

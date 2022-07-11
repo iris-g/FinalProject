@@ -1,6 +1,8 @@
 package com.example.finalproject;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -16,10 +18,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class DrawerBaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
     FrameLayout container;
     ImageButton imageButton;
+    CircleImageView userImg;
+    SharedPreferences app_preferences;
+    int appColor;
+
     @Override
     public void setContentView(View view) {
         drawerLayout= (DrawerLayout) getLayoutInflater().inflate(R.layout.drawer_base,null);
@@ -42,6 +50,14 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
 
         //making the navigation bar clickable
         NavigationView navigationView = drawerLayout.findViewById(R.id.nav_view);
+
+        app_preferences = this.getSharedPreferences("UserSettingsActivity", Context.MODE_PRIVATE);
+        appColor = app_preferences.getInt("color", 0);
+
+        /**finding the user profile picture*/
+//        userImg= drawerLayout.findViewById(R.id.user_image);
+//        userImg.setBorderColor(appColor);
+
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open,R.string.close);
