@@ -23,7 +23,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class DrawerBaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
     FrameLayout container;
-    ImageButton imageButton;
+    ImageButton homeBtn;
     CircleImageView userImg;
     SharedPreferences app_preferences;
     int appColor;
@@ -39,8 +39,9 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
         setSupportActionBar(toolbar);
 
 
-        imageButton = drawerLayout.findViewById(R.id.homeButton);
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        /**HOME button*/
+        homeBtn = drawerLayout.findViewById(R.id.homeButton);
+        homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(DrawerBaseActivity.this, MainActivity.class);

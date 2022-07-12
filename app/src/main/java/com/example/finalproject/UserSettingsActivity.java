@@ -1,8 +1,6 @@
 package com.example.finalproject;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import static com.yalantis.ucrop.util.FileUtils.getPath;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -11,8 +9,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,30 +23,31 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.finalproject.databinding.ActivityUserSettingsBinding;
-import com.github.drjacky.imagepicker.ImagePicker;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserSettingsActivity extends DrawerBaseActivity {
 
     private static final int PERMISSION_CODE = 1001;
-    private static final int IMAGE_PICK_CODE = 1000;
+    private static final int REQUEST_IMAGE_CAPTURE = 100;
+    int SELECT_PICTURE = 200;
     ActivityUserSettingsBinding activityUserSettingsBinding;
 
     Dialog dialog;
     Button btnOrange,btnYellow,btnGreen,btnBlue,btnPink,btnPurple;
     CircleImageView userImg;
-    ImageButton btnAddPic;
-    Uri imageUri;
+    ImageButton btnAddPic , btnDelete;
 
     SharedPreferences app_preferences;
     SharedPreferences.Editor editor;
     int appColor;
+
+    CircleImageView fromGallery , fromCamera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,6 @@ public class UserSettingsActivity extends DrawerBaseActivity {
 
         /**finding the user profile picture*/
         userImg = findViewById(R.id.user_image);
-
         userImg.setBorderColor(appColor);
 
         /**btnAddPic*/
@@ -81,8 +81,6 @@ public class UserSettingsActivity extends DrawerBaseActivity {
             @Override
             public void onClick(View v) {
                 showDialog();
-
-
             }
 
             private void showDialog() {
@@ -90,7 +88,18 @@ public class UserSettingsActivity extends DrawerBaseActivity {
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.bottom_add_img_layout);
 
-                CircleImageView fromGallery = dialog.findViewById(R.id.galleryBtn);
+                /**DELETE button*/
+                btnDelete = dialog.findViewById(R.id.deleteBtn);
+                btnDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                       userImg.setImageResource(R.drawable.android_avatar);
+                        dialog.dismiss();
+                    }
+                });
+
+                /**PIC FROM GALLERY button*/
+                fromGallery = dialog.findViewById(R.id.galleryBtn);
                 fromGallery.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -99,6 +108,25 @@ public class UserSettingsActivity extends DrawerBaseActivity {
                             == PackageManager.PERMISSION_DENIED){
                                 //permission isn't granted, request it
                                 String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                                requestPermissions(permissions,PERMISSION_CODE);
+                            }else {
+                                //permission allready granted
+                                pickImageFromGallery();
+                            }
+                        }
+                    }
+                });
+
+                /**PIC FROM CAMERA button*/
+                fromCamera = dialog.findViewById(R.id.cameraBtn);
+                fromCamera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.M){
+                            if(checkSelfPermission(Manifest.permission.CAMERA)
+                                    == PackageManager.PERMISSION_DENIED){
+                                //permission isn't granted, request it
+                                String[] permissions = {Manifest.permission.CAMERA};
                                 requestPermissions(permissions,PERMISSION_CODE);
                             }else {
                                 //permission allready granted
@@ -175,10 +203,17 @@ public class UserSettingsActivity extends DrawerBaseActivity {
     }
 
     private void pickImageFromGallery() {
-        //intent to pick picture
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, IMAGE_PICK_CODE);
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+
+        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+    }
+
+    private void pickImageFromCamera() {
+        Intent i = new Intent();
+        i.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(Intent.createChooser(i, "take Picture"), REQUEST_IMAGE_CAPTURE);
     }
 
 
@@ -193,19 +228,35 @@ public class UserSettingsActivity extends DrawerBaseActivity {
                     pickImageFromGallery();
                 }
             }
+            case REQUEST_IMAGE_CAPTURE : {
+                if (grantResults.length > 0 && grantResults[0] ==
+                        PackageManager.PERMISSION_GRANTED) {
+                    //permission was granted
+                    pickImageFromCamera();
+                }
+            }
+
         }
     }
 
     @SuppressLint("MissingSuperCall")
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-        if(resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE){
-            //SET IMAGE TO IMAGE VIEW
-            imageUri= data.getData();
-            //userImg.setImageURI(imageUri);
-           // super.onActivityResult(requestCode, resultCode, data);
-            userImg.setBorderColor(getColor(R.color.t_pink));
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_PICTURE) {
+                Uri selectedImageUri = data.getData();
+                String picturePath = getPath( UserSettingsActivity.this, selectedImageUri );
+                if (null != selectedImageUri) {
+                    userImg.setImageURI(Uri.parse(picturePath));
+                }
+            }
+            if (requestCode == 100) {
+                Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+                if (null != bitmap) {
+                    userImg.setImageBitmap(bitmap);
+                }
+            }
             dialog.dismiss();
 
         }

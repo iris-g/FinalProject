@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.finalproject">
-
+    <uses-permission android:name="android.permission.CAMERA"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,18 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProject"
         android:requestLegacyExternalStorage="true">
-        <activity
+
+       <activity
             android:name=".UserSettingsActivity"
-            android:exported="false" />
+           android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"></activity>
         <activity
             android:name=".CreateListActivity"
-            android:exported="true">
-        </activity>
-        <activity
-            android:name=".userLoginActivity"
             android:exported="true">
         </activity>
         <activity
@@ -33,7 +31,7 @@
             android:name=".EditListActivity"
             android:exported="true"></activity>
         <activity
-            android:name=".IntroActivity"
+            android:name=".userLoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
