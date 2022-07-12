@@ -34,16 +34,27 @@ public class MainActivity extends DrawerBaseActivity {
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         allocateActivityTitle(" ");
       setContentView(activityMainBinding.getRoot());
-      //////get exisiting lists from DB
         textView= findViewById(R.id.textView);
-         listView = findViewById(R.id.list_view);
+        listView = findViewById(R.id.list_view);
+        model = new ViewModelProvider(this).get(ViewModel.class);
+      //////get exisiting lists from DB
+
         shoppingList= new ArrayList<>();
         db  = AppDataBase.getDbInstance(this.getApplicationContext());
         listDao listDao = db.listDao();
-        model = new ViewModelProvider(this).get(ViewModel.class);
 
+        String emailAdd = null;
+        //get list name and update UI
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null) {
+            emailAdd = (String) bundle.get("email");
+
+        }
+        //get currently connected user iD
+       LoginTable table = db.listDao().getUserByEmail( emailAdd);
         //list of names of all existing lists for this user
-        List<ShoppingList> lists = listDao.getAllItemsList();
+        List<ShoppingList> lists = listDao.getAllLists(table.getId());
+
 
         if(lists.size()>0 )
             textView.setText("Create new list or view lists");

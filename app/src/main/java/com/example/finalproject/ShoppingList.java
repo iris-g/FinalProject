@@ -12,12 +12,18 @@ public class ShoppingList {
         @NonNull
         public String name ;
 
-        @ColumnInfo(name = "details")
-        public String details;
+        @ColumnInfo(name = "uid")
+        public  int uid ;
 
-        @ColumnInfo(name = "itemName")
-        public  String itemName;
         public void shoppingList() {
         }
 
-    }
+        public int getUid() {
+                return uid;
+        }
+        public void setId(int  id) {
+                this.uid = id;
+        }
+
+
+}

@@ -7,7 +7,7 @@
     android:layout_margin="20dp">
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/logIn_button"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:text="Log In"
@@ -19,23 +19,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listTitleEditText3"
+        app:layout_constraintTop_toBottomOf="@+id/password"
         app:layout_constraintVertical_bias="0.286" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/listTitleEditText2"
+        android:id="@+id/userEmail"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@drawable/edit_text_background"
         android:gravity="center"
-        android:hint="User Name"
+        android:hint="Email address"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/listTitleEditText3"
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@drawable/edit_text_background"
@@ -45,7 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listTitleEditText2"
+        app:layout_constraintTop_toBottomOf="@+id/userEmail"
         app:layout_constraintVertical_bias="0.076" />
 
     <TextView
@@ -78,15 +78,15 @@
 
     <TextView
         android:id="@+id/textView38"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="or"
-        android:textSize="24sp"
+        android:layout_width="232dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="32dp"
+        android:text="dont have an account?"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.092"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/logIn_button" />
 
     <TextView
         android:id="@+id/textView6"
@@ -94,9 +94,26 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:text="Forgot Password?"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/logIn_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listTitleEditText3"
+        app:layout_constraintTop_toBottomOf="@+id/password"
         app:layout_constraintVertical_bias="0.304" />
+
+    <Button
+        android:id="@+id/sign_up"
+        android:layout_width="91dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="21dp"
+        android:text="sign up"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.862"
+        app:layout_constraintStart_toEndOf="@+id/textView38"
+        app:layout_constraintTop_toBottomOf="@+id/logIn_button"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

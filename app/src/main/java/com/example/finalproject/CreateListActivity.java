@@ -35,6 +35,8 @@ public class CreateListActivity extends AppCompatActivity {
                 String inputText = listTitle.getText().toString();
                 ShoppingList list = new ShoppingList();
                 list.name=inputText;
+                int id = db.listDao().getDetails().get(db.listDao().getDetails().size()-1).getId();
+                list.setId(id);
                 db.listDao().insertLists(list);
                 finish();
 
