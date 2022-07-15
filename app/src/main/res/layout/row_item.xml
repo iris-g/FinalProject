@@ -3,13 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:backgroundTint="#7086D4">
-
-    <ImageView
-        android:id="@+id/flag"
-        android:layout_width="67dp"
-        android:layout_height="match_parent"
-        app:srcCompat="@drawable/ic_baseline_local_grocery_store_24" />
+    android:backgroundTint="@android:color/transparent">
 
     <TextView
         android:id="@+id/name"
@@ -17,11 +11,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="2dp"
-        android:layout_marginEnd="105dp"
-        android:layout_toEndOf="@+id/flag"
+        android:layout_marginEnd="73dp"
+        android:fontFamily="@font/quicksand_light"
         android:text="name sample"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold|italic" />
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/shorty"
@@ -30,26 +25,25 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="1dp"
-        android:layout_marginEnd="106dp"
-        android:layout_marginBottom="7dp"
-        android:layout_toEndOf="@+id/flag"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/quicksand_light"
         android:text="short description sample"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        android:textStyle="bold|italic" />
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <CheckBox
         android:id="@+id/checkBox"
-        android:layout_width="68dp"
-        android:layout_height="39dp"
+        android:layout_width="27dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="266dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginBottom="-5dp"
-        android:layout_toEndOf="@+id/flag"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="19dp"
+        android:layout_marginBottom="12dp"
+        android:layout_toStartOf="@+id/shorty"
         android:button="@android:drawable/checkbox_on_background"
         android:checked="false"
         android:contextClickable="false"
@@ -58,5 +52,19 @@
         android:gravity="right"
         android:paddingRight="24dp"
         android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="56dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toStartOf="@+id/shorty"
+        android:background="@color/t_green" />
 
 </RelativeLayout>

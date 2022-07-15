@@ -11,9 +11,7 @@
         android:theme="@style/Theme.FinalProject"
         android:requestLegacyExternalStorage="true">
 
-       <activity
-            android:name=".UserSettingsActivity"
-           android:exported="false" />
+
 
         <activity
             android:name=".MainActivity"

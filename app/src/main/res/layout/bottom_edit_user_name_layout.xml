@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/profile_pic"
+            android:layout_width="342dp"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/canava_grotesk_regular"
+            android:padding="15dp"
+            android:text="What is your name?"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/userNameEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:focusableInTouchMode="false"
+            android:focusedByDefault="false"
+            android:fontFamily="@font/quicksand_light"
+            android:inputType="textPersonName"
+            android:text="The name from DB" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/saveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/canava_grotesk_regular"
+            android:text="Save"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/cancelBtn"
+            android:layout_width="73dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/canava_grotesk_regular"
+            android:text="Cancel"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</LinearLayout>

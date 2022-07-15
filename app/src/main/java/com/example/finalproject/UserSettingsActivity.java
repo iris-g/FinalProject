@@ -12,7 +12,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,8 +20,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,7 +44,10 @@ public class UserSettingsActivity extends DrawerBaseActivity {
     Dialog dialog;
     Button btnOrange,btnYellow,btnGreen,btnBlue,btnPink,btnPurple;
     CircleImageView userImg;
-    ImageButton btnAddPic , btnDelete;
+    ImageButton btnAddPic , btnDelete , btnEditName;
+    TextView btnCancel, btnSave;
+
+    EditText editUser;
 
     SharedPreferences app_preferences;
     SharedPreferences.Editor editor;
@@ -61,12 +67,14 @@ public class UserSettingsActivity extends DrawerBaseActivity {
         appColor = app_preferences.getInt("color", 0);
 
         /**finding the user profile picture*/
-        userImg = findViewById(R.id.user_image);
+        userImg = findViewById(R.id.user_image_small);
         userImg.setBorderColor(appColor);
 
-        /**btnAddPic*/
+        /**finding 'btnAddPic'*/
         btnAddPic = findViewById(R.id.btnAddPic);
-        
+
+        /**finding 'btnEditName'*/
+        btnEditName = findViewById(R.id.btnEditName);
 
         /**finding the color buttons*/
         btnOrange = findViewById(R.id.btnOrange);
@@ -76,14 +84,14 @@ public class UserSettingsActivity extends DrawerBaseActivity {
         btnPink = findViewById(R.id.btnPink);
         btnPurple = findViewById(R.id.btnPurple);
 
-        /**Add picture button*/
+        /**Add picture button listener*/
         btnAddPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog();
+                showDialogPic();
             }
 
-            private void showDialog() {
+            private void showDialogPic() {
                 dialog = new Dialog(UserSettingsActivity.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.bottom_add_img_layout);
@@ -130,7 +138,7 @@ public class UserSettingsActivity extends DrawerBaseActivity {
                                 requestPermissions(permissions,PERMISSION_CODE);
                             }else {
                                 //permission allready granted
-                                pickImageFromGallery();
+                                pickImageFromCamera();
                             }
                         }
                     }
@@ -141,9 +149,54 @@ public class UserSettingsActivity extends DrawerBaseActivity {
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
                 dialog.getWindow().setGravity(Gravity.BOTTOM);
+            }
+        });
+        /**END of add picture button listener*/
 
+        /**edit user name*/
+        btnEditName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogEditName();
+            }
 
+            private void showDialogEditName() {
+                dialog = new Dialog(UserSettingsActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.bottom_edit_user_name_layout);
 
+                //
+                /**CANCEL button*/
+                btnCancel= dialog.findViewById(R.id.cancelBtn);
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        UserSettingsActivity.this.getWindow().
+                                setSoftInputMode(WindowManager.
+                                        LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                        dialog.dismiss();
+
+                    }
+                });
+
+                /**SAVE button*/
+                btnSave= dialog.findViewById(R.id.saveBtn);
+                btnSave.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+//                /**showing the keyboard*/
+                InputMethodManager imm = (InputMethodManager)   getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+                dialog.show();
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                dialog.getWindow().setGravity(Gravity.BOTTOM);
             }
         });
 
@@ -212,8 +265,10 @@ public class UserSettingsActivity extends DrawerBaseActivity {
 
     private void pickImageFromCamera() {
         Intent i = new Intent();
-        i.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+       i.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(Intent.createChooser(i, "take Picture"), REQUEST_IMAGE_CAPTURE);
+
+
     }
 
 

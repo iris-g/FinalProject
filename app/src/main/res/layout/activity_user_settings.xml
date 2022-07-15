@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserSettingsActivity"
-    android:background="#F6F5F5">
+    android:background="#F6F5F5"
+    tools:context=".UserSettingsActivity">
 
     <TextView
         android:id="@+id/textView7"
@@ -20,15 +20,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.131"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/userNameTextView"
         app:layout_constraintVertical_bias="0.326" />
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/userNameTextView"
+        android:layout_width="239dp"
+        android:layout_height="29dp"
         android:fontFamily="@font/nexa_thin"
-        android:text="your name"
+        android:text="name from db"
+        android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -42,44 +43,31 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/nexa_thin"
-        android:text="profile"
+        android:fontFamily="@font/quicksand_regular"
+        android:text="Profile"
         android:textColor="#000000"
         android:textSize="44sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/user_image"
+        app:layout_constraintBottom_toTopOf="@+id/user_image_small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/user_image"
+        android:id="@+id/user_image_small"
         android:layout_width="240dp"
         android:layout_height="240dp"
         android:layout_centerInParent="true"
         android:src="@drawable/android_avatar"
         app:civ_border_color="#6ECBAF"
         app:civ_border_width="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintBottom_toTopOf="@+id/userNameTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.74" />
-
-    <ImageView
-        android:id="@+id/editImage"
-        android:layout_width="22dp"
-        android:layout_height="27dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView7"
-        app:layout_constraintEnd_toStartOf="@+id/textView4"
-        app:layout_constraintHorizontal_bias="0.886"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_image"
-        app:layout_constraintVertical_bias="0.338"
-        app:srcCompat="@drawable/ic_edit"
-        app:tint="#000000" />
 
     <TableRow
         android:id="@+id/tableRow"
@@ -157,13 +145,13 @@
         android:layout_height="55dp"
         android:background="@drawable/custom_round_button"
         android:backgroundTint="#C4C4C4"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/user_image"
-        app:layout_constraintEnd_toEndOf="@+id/user_image"
-        app:layout_constraintHorizontal_bias="0.924"
-        app:layout_constraintStart_toStartOf="@+id/user_image"
-        app:layout_constraintTop_toTopOf="@+id/user_image"
         android:src="@drawable/ic_camera"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/user_image_small"
+        app:layout_constraintEnd_toEndOf="@+id/user_image_small"
+        app:layout_constraintHorizontal_bias="0.924"
+        app:layout_constraintStart_toStartOf="@+id/user_image_small"
+        app:layout_constraintTop_toTopOf="@+id/user_image_small"
         app:layout_constraintVertical_bias="1.0" />
 
     <View
@@ -175,7 +163,20 @@
         app:layout_constraintBottom_toTopOf="@+id/textView7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="@+id/userNameTextView"
         app:layout_constraintVertical_bias="0.603" />
+
+    <ImageButton
+        android:id="@+id/btnEditName"
+        android:layout_width="39dp"
+        android:layout_height="42dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
+        app:layout_constraintEnd_toStartOf="@+id/userNameTextView"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_image_small"
+        app:layout_constraintVertical_bias="0.351"
+        app:srcCompat="@drawable/ic_edit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
