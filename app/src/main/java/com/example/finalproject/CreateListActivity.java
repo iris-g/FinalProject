@@ -2,6 +2,8 @@ package com.example.finalproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,6 +30,25 @@ public class CreateListActivity extends AppCompatActivity {
         listTitle=findViewById(R.id.listTitleEditText);
         createBtn = findViewById(R.id.create_button);
         db  = AppDataBase.getDbInstance(this.getApplicationContext());
+
+        listTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String inputText = listTitle.getText().toString().trim();
+
+                createBtn.setEnabled(!inputText.isEmpty());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         createBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override

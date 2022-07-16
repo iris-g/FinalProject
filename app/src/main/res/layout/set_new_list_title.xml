@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
+    android:layout_margin="10dp"
     android:background="#F6F5F5">
 
     <ImageView
@@ -25,6 +25,7 @@
         android:layout_height="55dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/edit_text_background"
+        android:fontFamily="@font/canava_grotesk_regular"
         android:gravity="center"
         android:hint="List Title"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,6 +37,9 @@
         android:id="@+id/create_button"
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:backgroundTint="@color/button_background_color"
+        android:enabled="false"
+        android:fontFamily="@font/canava_grotesk_regular"
         android:text="Create"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"

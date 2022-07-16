@@ -32,6 +32,7 @@ public class MainActivity extends DrawerBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+
         allocateActivityTitle(" ");
       setContentView(activityMainBinding.getRoot());
         textView= findViewById(R.id.textView);
@@ -61,7 +62,7 @@ public class MainActivity extends DrawerBaseActivity {
             //add all lists names  from DB to a list of strings
         for(int i=0; i < lists.size();i++)
           shoppingList.add(lists.get(i).name);
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(getApplicationContext(),R.layout.item_view, R.id.itemTextView, shoppingList);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(getApplicationContext(),R.layout.listview_color_and_text, R.id.item_text, shoppingList);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
