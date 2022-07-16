@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class userLoginActivity extends AppCompatActivity {
         Button login ;
@@ -29,7 +31,10 @@ public class userLoginActivity extends AppCompatActivity {
         password=findViewById(R.id.password);
         signUp=findViewById(R.id.sign_up);
         db  = AppDataBase.getDbInstance(this.getApplicationContext());
-
+         // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference root = database.getReference();
+        root.setValue("anme");
         login.setOnClickListener(new View.OnClickListener() {
 
             @Override
