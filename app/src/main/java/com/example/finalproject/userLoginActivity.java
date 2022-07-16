@@ -34,7 +34,8 @@ public class userLoginActivity extends AppCompatActivity {
          // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference root = database.getReference();
-        root.setValue("anme");
+        root.setValue("user");
+
         login.setOnClickListener(new View.OnClickListener() {
 
             @Override

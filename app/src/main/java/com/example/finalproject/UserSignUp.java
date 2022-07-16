@@ -1,6 +1,5 @@
 package com.example.finalproject;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,7 +8,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+
 
 public class UserSignUp extends AppCompatActivity {
     EditText name;
@@ -29,6 +39,8 @@ public class UserSignUp extends AppCompatActivity {
         password=findViewById(R.id.txtPassword);
         signUp=findViewById(R.id.signUp);
         db  = AppDataBase.getDbInstance(this.getApplicationContext());
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+      //  FirebaseDatabase ref = FirebaseDatabase.getInstance();
         signUp.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -48,6 +60,24 @@ public class UserSignUp extends AppCompatActivity {
                     name.setError("Please Enter Your name ");
                 }
                 else {
+
+                    FirebaseAuth auth = FirebaseAuth.getInstance();
+                    auth.createUserWithEmailAndPassword(strEmail,strPassword).addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                    if (task.isSuccessful()) {
+                                        FirebaseUser fUser = auth.getCurrentUser();
+                                        User user = new User(strName, strEmail);
+                                        ref.child("Users").child(fUser.getUid()).setValue(user);
+                                        Toast.makeText(UserSignUp.this, "User registered successfully", Toast.LENGTH_SHORT).show();
+                                        Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                                        startActivity(mainActivity);
+                                    }
+                                }
+                            });
+
+                        /*
                     //check if user already exists with this email
                     userData= db.listDao().getUserByEmail(strEmail);
                     if(userData== null ) {//user not exists with this email
@@ -68,6 +98,8 @@ public class UserSignUp extends AppCompatActivity {
                         toast.show();
 
                     }
+                    /*
+                         */
                 }
 
 
