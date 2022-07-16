@@ -24,6 +24,9 @@
             android:name=".UserSignUp"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".UserSettingsActivity"
+            android:exported="false" />
 
         <activity
             android:name=".EditListActivity"
