@@ -31,6 +31,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.finalproject.databinding.ActivityUserSettingsBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -46,9 +48,9 @@ public class UserSettingsActivity extends DrawerBaseActivity {
     CircleImageView userImg;
     ImageButton btnAddPic , btnDelete , btnEditName;
     TextView btnCancel, btnSave;
-
+    TextView userName;
     EditText editUser;
-
+    FirebaseAuth auth;
     SharedPreferences app_preferences;
     SharedPreferences.Editor editor;
     int appColor;
@@ -75,6 +77,13 @@ public class UserSettingsActivity extends DrawerBaseActivity {
 
         /**finding 'btnEditName'*/
         btnEditName = findViewById(R.id.btnEditName);
+
+        /**get userName from DB and set textView'*/
+        userName=findViewById(R.id.userNameTextView);
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser fUser = auth.getCurrentUser();
+        String usersName = fUser.getDisplayName();
+        userName.setText(usersName);
 
         /**finding the color buttons*/
         btnOrange = findViewById(R.id.btnOrange);

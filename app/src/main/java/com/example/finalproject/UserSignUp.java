@@ -1,8 +1,10 @@
 package com.example.finalproject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -70,12 +73,37 @@ public class UserSignUp extends AppCompatActivity {
                                         FirebaseUser fUser = auth.getCurrentUser();
                                         User user = new User(strName, strEmail);
                                         ref.child("Users").child(fUser.getUid()).setValue(user);
+                                        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+                                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                .setDisplayName(strName).build();
+
+                                        currentUser.updateProfile(profileUpdates)
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Log.d("TAG", "User profile updated.");
+                                                        }
+                                                    }
+                                                });
+
                                         Toast.makeText(UserSignUp.this, "User registered successfully", Toast.LENGTH_SHORT).show();
                                         Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(mainActivity);
                                     }
+
+                                    else {
+                                        Context context = getApplicationContext();
+                                        CharSequence text = "User already exists with ths email!";
+                                        int duration = Toast.LENGTH_SHORT;
+                                        Toast toast = Toast.makeText(context, text, duration);
+                                        toast.show();
+
+                                    }
                                 }
                             });
+
 
                         /*
                     //check if user already exists with this email
@@ -102,7 +130,7 @@ public class UserSignUp extends AppCompatActivity {
                          */
                 }
 
-
+                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(strName).build();
             }
         });
 

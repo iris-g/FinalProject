@@ -3,8 +3,8 @@ package com.example.finalproject;
 
     public class User
     {
-        public String Name;
-        public String Email;
+        public String name;
+        public String email;
 
 // need empty constractor
 
@@ -13,17 +13,17 @@ package com.example.finalproject;
 
         public User(String name,String email)
         {
-            Name = name;
-            email = email;
+            this.name = name;
+            this.email = email;
         }
 
         public String getName()
         {
-            return Name;
+            return name;
         }
 
         public String getEmail()
         {
-            return Email;
+            return email;
         }
 }
