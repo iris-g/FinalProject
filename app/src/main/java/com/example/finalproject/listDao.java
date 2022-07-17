@@ -11,6 +11,8 @@ import java.util.List;
 @Dao
 public interface listDao {
 
+
+
     @Query("Select * from shoppingList where uid= :userId")
     List<ShoppingList> getAllLists(int userId);
 

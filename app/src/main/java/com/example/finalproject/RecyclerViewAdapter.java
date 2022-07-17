@@ -16,6 +16,9 @@ import androidx.lifecycle.ViewModelStore;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements ViewModelStoreOwner, LifecycleOwner {
@@ -24,8 +27,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private int selectedPos =  RecyclerView.NO_POSITION;;
     Context context;
     ArrayList<Item> shownItems;
+    CollectionReference itemsRef;
     TextView items;
     AppDataBase db;
+    FirebaseFirestore rootRef;
 
     public RecyclerViewAdapter(ViewModel model, Context context) {
         this.model= new ViewModelProvider((FragmentActivity)context).get(ViewModel.class);
@@ -36,6 +41,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         model.getSelectedRow();
         model.getItems();
         model.getItemsCount();
+
+        rootRef = FirebaseFirestore.getInstance();
 
     }
 
@@ -50,10 +57,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public ViewModelStore getViewModelStore() {
         return null;
     }
-    //change - updates shown countries
-    public void updateItemsList(String name, String description ) {
 
-        shownItems.add(shownItems.size(), new Item(name,description));
+    public void updateItemsList(String name, String description, String itemID ) {
+
+         shownItems.add(shownItems.size(), new Item(name,description,itemID));
         notifyDataSetChanged();
     }
 
@@ -112,7 +119,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 public boolean onLongClick(View view )
                 {
                     OnItemLongClick(position);
-                  //  ((MainActivity)context) .setInitCountry(null);
 
                     return false;
 
@@ -125,9 +131,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private void OnItemLongClick(int position) {
             notifyDataSetChanged();
             Item item1 = shownItems.get(position);
+           deleteItem(item1.getProductId());
             String name = item1.name;
-            Items item=db.listDao().getItem(name);
-            db.listDao().deleteItem(item);
+           // Items item=db.listDao().getItem(name);
+           // db.listDao().deleteItem(item);
             shownItems.remove(item1);
             model.setItems(shownItems);
             model.setItemsCount(shownItems.size());
@@ -146,5 +153,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             model.setSelectedRow(selectedPos);
             notifyItemChanged(selectedPos);
         }
+    }
+
+    public void deleteItem(String itemId) {
+        itemsRef=  rootRef.collection("products");
+        // where we are storing our items
+        itemsRef. document(itemId).delete();
+                // after that we are getting the document
+                // which we have to delete.
+                // after passing the document id we are calling
+                // delete method to delete this document.
+
+
+
+
+
+
     }
 }
