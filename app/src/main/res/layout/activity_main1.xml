@@ -10,8 +10,8 @@
 
     <Button
         android:id="@+id/add_btn"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_width="370dp"
+        android:layout_height="46dp"
         android:background="#7086D4"
         android:fontFamily="@font/canava_grotesk_regular"
         android:text="+ Add Item"
@@ -21,10 +21,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.845" />
 
     <ImageButton
         android:id="@+id/button5"
@@ -34,12 +34,13 @@
         android:background="@drawable/custom_round_button"
         android:rotationY="180"
         android:src="@drawable/ic_send_foreground"
-        android:text="+"
         android:textColor="#FFFFFF"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="0.613" />
 
     <TextView
         android:id="@+id/list_name"
@@ -68,10 +69,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.304"
+        app:layout_constraintHorizontal_bias="0.384"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/list_name"
-        app:layout_constraintVertical_bias="0.774" />
+        app:layout_constraintVertical_bias="0.741" />
 
     <TextView
         android:id="@+id/items_num"
@@ -94,15 +95,12 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="356dp"
-        android:layout_marginTop="89dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="20dp"
         android:backgroundTint="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_name"
-        app:layout_constraintVertical_bias="0.0"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

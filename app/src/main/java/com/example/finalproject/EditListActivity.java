@@ -18,6 +18,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.finalproject.databinding.ActivityMain1Binding;
+import com.example.finalproject.databinding.ActivityMainBinding;
+import com.example.finalproject.databinding.ActivityUserSettingsBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -33,7 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EditListActivity extends AppCompatActivity {
+public class EditListActivity extends DrawerBaseActivity {
 
 
     //widgets
@@ -46,6 +49,9 @@ public class EditListActivity extends AppCompatActivity {
     TextView listName;
     TextView items;
     CheckBox chkYourCheckBox;
+
+    /**in order to bind the drawer(side menu)*/
+    ActivityMain1Binding activityMain1Binding;
 
     //vars
     String lName;
@@ -65,7 +71,9 @@ public class EditListActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main1);
+
+        activityMain1Binding = activityMain1Binding.inflate(getLayoutInflater());
+        setContentView(activityMain1Binding.getRoot());
 
         //widgets
         addBtn = findViewById(R.id.add_btn);
@@ -90,9 +98,7 @@ public class EditListActivity extends AppCompatActivity {
         rvItems.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvItems.setLayoutManager(manager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvItems.getContext(),
-                manager.getOrientation());
-        rvItems.addItemDecoration(dividerItemDecoration);
+
 
         //get list name and update UI
         Bundle bundle = getIntent().getExtras();

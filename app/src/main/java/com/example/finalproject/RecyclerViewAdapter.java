@@ -1,6 +1,8 @@
 package com.example.finalproject;
 
+import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +33,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     TextView items;
     FirebaseFirestore rootRef;
 
+    SharedPreferences app_preferences;
+    int appColor;
+
     public RecyclerViewAdapter(ViewModel model, Context context) {
         this.model= new ViewModelProvider((FragmentActivity)context).get(ViewModel.class);
         this.context=context;
@@ -41,7 +46,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         model.getItemsCount();
 
         rootRef = FirebaseFirestore.getInstance();
-
     }
 
     @NonNull
@@ -67,6 +71,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater =(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemView=inflater.inflate(R.layout.row_item,parent,false);
+
+
+        /**getting the selected color by user from the SP*/
+        app_preferences = context.getSharedPreferences("UserSettingsActivity", Context.MODE_PRIVATE);
+        appColor = app_preferences.getInt("color", -9516113);
+
+        /**setting color to the shopping liast items according to the color in the SP file*/
+        itemView.findViewById(R.id.card_color).setBackgroundColor(appColor);
         ViewHolder viewHolder = new ViewHolder(itemView);
 
         return viewHolder;

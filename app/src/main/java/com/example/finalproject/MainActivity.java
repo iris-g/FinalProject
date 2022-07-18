@@ -64,6 +64,7 @@ public class MainActivity extends DrawerBaseActivity {
 
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(activityMainBinding.getRoot());
+
         //widgets
         textView= findViewById(R.id.textView);
         listView = findViewById(R.id.list_view);

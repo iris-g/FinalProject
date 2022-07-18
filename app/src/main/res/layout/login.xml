@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp">
+    android:layout_margin="10dp">
 
     <Button
         android:id="@+id/logIn_button"
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:backgroundTint="@color/button_background_color"
+        android:fontFamily="@font/canava_grotesk_regular"
         android:text="Log In"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
@@ -27,6 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@drawable/edit_text_background"
+        android:fontFamily="@font/quicksand_regular"
         android:gravity="center"
         android:hint="Email address"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,6 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@drawable/edit_text_background"
+        android:fontFamily="@font/quicksand_regular"
         android:gravity="center"
         android:hint="Password"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -53,6 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:layout_marginBottom="120dp"
+        android:fontFamily="@font/quicksand_light"
         android:text="Log In or Create New Account"
         android:textAlignment="center"
         android:textColor="#333E44"
@@ -77,43 +82,48 @@
         app:srcCompat="@drawable/login" />
 
     <TextView
-        android:id="@+id/textView38"
-        android:layout_width="232dp"
-        android:layout_height="33dp"
-        android:layout_marginTop="32dp"
-        android:text="dont have an account?"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.092"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logIn_button" />
-
-    <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
+        android:fontFamily="@font/nexa_bold"
         android:text="Forgot Password?"
         app:layout_constraintBottom_toTopOf="@+id/logIn_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
         app:layout_constraintVertical_bias="0.304" />
 
-    <Button
-        android:id="@+id/sign_up"
-        android:layout_width="91dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="21dp"
-        android:text="sign up"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold"
+    <androidx.cardview.widget.CardView
+        android:layout_width="390dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.862"
-        app:layout_constraintStart_toEndOf="@+id/textView38"
-        app:layout_constraintTop_toBottomOf="@+id/logIn_button"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logIn_button">
+
+        <TextView
+            android:id="@+id/sign_up"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_marginStart="246dp"
+            android:fontFamily="@font/canava_grotesk_regular"
+            android:text="Sign Up here"
+            android:textColor="#303F9F"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/dont_have_acc"
+            android:layout_width="242dp"
+            android:layout_height="33dp"
+            android:layout_marginLeft="2dp"
+            android:fontFamily="@font/canava_grotesk_regular"
+            android:text="dont have an account?"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

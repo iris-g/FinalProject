@@ -44,6 +44,8 @@ public class UserSettingsActivity extends DrawerBaseActivity {
     private static final int PERMISSION_CODE = 1001;
     private static final int REQUEST_IMAGE_CAPTURE = 100;
     int SELECT_PICTURE = 200;
+
+    /**in order to bind the drawer(side menu)*/
     ActivityUserSettingsBinding activityUserSettingsBinding;
 
     Dialog dialog;
@@ -270,7 +272,7 @@ public class UserSettingsActivity extends DrawerBaseActivity {
         btnPink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userImg.setBorderColor(getColor(appColor = R.color.t_pink));
+                userImg.setBorderColor(appColor = getColor(R.color.t_pink));
                 saveData();
             }
         });

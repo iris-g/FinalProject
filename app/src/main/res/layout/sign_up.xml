@@ -3,69 +3,80 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
 
 
   <TextView
       android:id="@+id/textView2"
       android:layout_width="match_parent"
-      android:layout_height="42dp"
-      android:layout_marginBottom="652dp"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/quicksand_light"
       android:text="Sign-Up"
       android:textAlignment="center"
       android:textColor="#333E44"
-      android:textSize="24sp"
+      android:textSize="34sp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.0"
-      app:layout_constraintStart_toStartOf="parent"
 
-      app:layout_constraintVertical_bias="0.0" />
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.023" />
 
   <EditText
       android:id="@+id/txtEmailAddress"
       android:layout_width="349dp"
       android:layout_height="54dp"
-      android:layout_marginBottom="180dp"
       android:ems="10"
+      android:fontFamily="@font/quicksand_regular"
       android:hint="E-Mail Address"
       android:inputType="textEmailAddress"
-      app:layout_constraintBottom_toTopOf="@+id/signUp"
+      app:layout_constraintBottom_toTopOf="@+id/txtPassword"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent" />
+      app:layout_constraintHorizontal_bias="0.627"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/textView2"
+      app:layout_constraintVertical_bias="0.837" />
 
   <EditText
       android:id="@+id/txtPassword"
       android:layout_width="349dp"
       android:layout_height="54dp"
-      android:layout_marginTop="40dp"
       android:ems="10"
+      android:fontFamily="@font/quicksand_regular"
       android:hint="Password"
       android:inputType="textPassword"
       app:layout_constraintBottom_toTopOf="@+id/signUp"
       app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.627"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/txtEmailAddress"
-      app:layout_constraintVertical_bias="0.0" />
+      app:layout_constraintTop_toBottomOf="@+id/textView2"
+      app:layout_constraintVertical_bias="0.849" />
 
   <EditText
       android:id="@+id/name_txt"
       android:layout_width="349dp"
       android:layout_height="54dp"
+      android:layout_marginTop="72dp"
       android:ems="10"
+      android:fontFamily="@font/quicksand_regular"
       android:hint="Name"
       android:inputType="textPersonName"
       app:layout_constraintBottom_toTopOf="@+id/txtEmailAddress"
       app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.511"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.774" />
+      app:layout_constraintTop_toBottomOf="@+id/textView2"
+      app:layout_constraintVertical_bias="0.203" />
 
   <Button
       android:id="@+id/signUp"
       android:layout_width="match_parent"
       android:layout_height="55dp"
-      android:layout_marginBottom="260dp"
+      android:layout_marginBottom="188dp"
+      android:backgroundTint="@color/button_background_color"
+      android:fontFamily="@font/canava_grotesk_regular"
       android:text="Sign up"
       android:textAllCaps="false"
       android:textColor="#FFFFFF"

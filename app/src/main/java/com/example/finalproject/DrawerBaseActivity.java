@@ -40,6 +40,7 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
         setSupportActionBar(toolbar);
 
 
+
         /**HOME button*/
         homeBtn = drawerLayout.findViewById(R.id.homeButton);
         homeBtn.setOnClickListener(new View.OnClickListener() {
@@ -54,11 +55,13 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
         NavigationView navigationView = drawerLayout.findViewById(R.id.nav_view);
 
         app_preferences = this.getSharedPreferences("UserSettingsActivity", Context.MODE_PRIVATE);
-        appColor = app_preferences.getInt("color", 0);
+        appColor = app_preferences.getInt("color", -9516113);
+
+        View headerView = navigationView.getHeaderView(0);
 
         /**finding the user profile picture*/
-//        userImg= drawerLayout.findViewById(R.id.user_image);
-//        userImg.setBorderColor(appColor);
+        userImg= headerView.findViewById(R.id.user_image_small);
+        userImg.setBorderColor(appColor);
 
         navigationView.setNavigationItemSelectedListener(this);
 
