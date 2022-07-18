@@ -38,8 +38,7 @@
             android:focusableInTouchMode="false"
             android:focusedByDefault="false"
             android:fontFamily="@font/quicksand_light"
-            android:inputType="textPersonName"
-            android:text="The name from DB" />
+            android:inputType="textPersonName" />
     </LinearLayout>
 
     <LinearLayout

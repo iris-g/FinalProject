@@ -31,8 +31,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.finalproject.databinding.ActivityUserSettingsBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -77,6 +80,8 @@ public class UserSettingsActivity extends DrawerBaseActivity {
 
         /**finding 'btnEditName'*/
         btnEditName = findViewById(R.id.btnEditName);
+
+
 
         /**get userName from DB and set textView'*/
         userName=findViewById(R.id.userNameTextView);
@@ -164,8 +169,11 @@ public class UserSettingsActivity extends DrawerBaseActivity {
 
         /**edit user name*/
         btnEditName.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
+
                 showDialogEditName();
             }
 
@@ -173,6 +181,7 @@ public class UserSettingsActivity extends DrawerBaseActivity {
                 dialog = new Dialog(UserSettingsActivity.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.bottom_edit_user_name_layout);
+                editUser=dialog.findViewById(R.id.userNameEditText);
 
                 //
                 /**CANCEL button*/
@@ -193,7 +202,19 @@ public class UserSettingsActivity extends DrawerBaseActivity {
                 btnSave.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dialog.dismiss();
+
+                        FirebaseAuth auth = FirebaseAuth.getInstance();
+                        FirebaseUser fUser = auth.getCurrentUser();
+                        userName.setText(editUser.getText().toString());
+                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(String.valueOf(editUser.getText())).build();
+                        fUser.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                dialog.dismiss();
+                            }
+                        });
+
                     }
                 });
 

@@ -52,14 +52,16 @@ public class EditListActivity extends AppCompatActivity {
     Map<String, Object> dataMap = new HashMap<>();
     List<Item> itemsList;
     String listId = null;
-    String productId=null;
+    String productId;
+    String[] name ;
+    String[] additionalData ;
 
     //data base
     FirebaseAuth auth;
     private CollectionReference userShoppingListsRef;
     private CollectionReference itemsRef;
     private View mParentLayout;
-    AppDataBase db;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,13 +77,12 @@ public class EditListActivity extends AppCompatActivity {
         mParentLayout = findViewById(android.R.id.content);
 
         //vars
-        final String[] name = new String[1];
-        final String[] additionalData = new String[1];
+        name = new String[1];
+        additionalData = new String[1];
         itemsList = new ArrayList<Item>();
 
         //db
         model = new ViewModelProvider(this).get(ViewModel.class);
-        db  = AppDataBase.getDbInstance(this.getApplicationContext());
         auth = FirebaseAuth.getInstance();
 
         //create and set adapter for recycler view
@@ -101,16 +102,9 @@ public class EditListActivity extends AppCompatActivity {
             listName.setText(lName);
 
             //check if list llready has items in DB
-            //getListId(lName);
             getListItems(lName);
-            //if there are items in list update the adapter
-            if(itemsList.size() > 0)
-            {
-                for(int i=0;i<itemsList.size();i++)
-                adapter.updateItemsList(itemsList.get(i).getName(), itemsList.get(i).getDetails(),itemsList.get(i).productId);
-                items.setText(String.valueOf(adapter.getItemCount()));
 
-            }
+
         }
 
         // Update the UI if number of items changed using live data
@@ -141,7 +135,6 @@ public class EditListActivity extends AppCompatActivity {
                             additionalData[0] = data_input.getText().toString();
                             /** create and insert item to data base **/
                             createNewItem( name[0], additionalData[0]);
-                            adapter.updateItemsList(name[0], additionalData[0],productId);
                             adapter.notifyDataSetChanged();
                             /** update items number in live data **/
                             items.setText(String.valueOf(adapter.getItemCount()));
@@ -175,6 +168,7 @@ public class EditListActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
+                    adapter.updateItemsList(name[0], additionalData[0],productId);
                     makeSnackBarMessage("Created new item");
 
                 }
@@ -200,10 +194,9 @@ public class EditListActivity extends AppCompatActivity {
                     for(QueryDocumentSnapshot doc :task.getResult())
                     {
                         dataMap=doc.getData();
-
                         Item item = new Item(String.valueOf(dataMap.get("name")), String.valueOf(dataMap.get("details")),String.valueOf(dataMap.get("itemId")));
                         itemsList.add(item);
-                        adapter.updateItemsList(item.getName(),item.getDetails(), String.valueOf(dataMap.get("itemId")));
+                        adapter.updateItemsList(item.getName(),item.getDetails(), String.valueOf(dataMap.get("productId")));
                         Log.d("Tag","on complete"+doc.getData())  ;
                     }
                     adapter.notifyDataSetChanged();

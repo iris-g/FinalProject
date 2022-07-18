@@ -29,14 +29,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     ArrayList<Item> shownItems;
     CollectionReference itemsRef;
     TextView items;
-    AppDataBase db;
     FirebaseFirestore rootRef;
 
     public RecyclerViewAdapter(ViewModel model, Context context) {
         this.model= new ViewModelProvider((FragmentActivity)context).get(ViewModel.class);
         this.context=context;
         shownItems = new ArrayList<Item>();
-        db  = AppDataBase.getDbInstance(context);
         //generate live data objects
         model.getSelectedRow();
         model.getItems();

@@ -28,7 +28,6 @@ public class UserSignUp extends AppCompatActivity {
     EditText name;
     EditText email;
     EditText password;
-    AppDataBase db;
     Button signUp ;
     private LoginTable userData;
 
@@ -41,7 +40,7 @@ public class UserSignUp extends AppCompatActivity {
         email= findViewById(R.id.txtEmailAddress);
         password=findViewById(R.id.txtPassword);
         signUp=findViewById(R.id.signUp);
-        db  = AppDataBase.getDbInstance(this.getApplicationContext());
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
       //  FirebaseDatabase ref = FirebaseDatabase.getInstance();
         signUp.setOnClickListener(new View.OnClickListener() {

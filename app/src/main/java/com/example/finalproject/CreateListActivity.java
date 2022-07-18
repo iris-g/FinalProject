@@ -21,16 +21,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 
 public class CreateListActivity extends AppCompatActivity {
+    //widgets
     List<String> shoppingList;
     TextView listTitle ;
     Button createBtn ;
-    AppDataBase db;
     ListView listView;
     //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
     ArrayAdapter adapter;
+
+    //db
     private CollectionReference userShoppingListsRef;
     private FirebaseFirestore rootRef;
     FirebaseAuth auth ;
+    FirebaseUser fUser ;
+
+    //vars
     String user_name=null;
 
     @Override
@@ -40,9 +45,8 @@ public class CreateListActivity extends AppCompatActivity {
         listTitle=findViewById(R.id.listTitleEditText);
         createBtn = findViewById(R.id.create_button);
         auth = FirebaseAuth.getInstance();
-        db  = AppDataBase.getDbInstance(this.getApplicationContext());
         rootRef = FirebaseFirestore.getInstance();
-        String emailAdd = null;
+        fUser =auth.getCurrentUser();
 
         listTitle.addTextChangedListener(new TextWatcher() {
             @Override
@@ -68,20 +72,15 @@ public class CreateListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String inputText = listTitle.getText().toString();
-                FirebaseUser fUser = auth.getCurrentUser();
 
-                /* need to add a check if the list already exists  */
                 if( !inputText.equals("")) {
-                    userShoppingListsRef = rootRef.collection("shoppingLists").document(fUser.getEmail()).collection("userShoppingLists");
-                    String shoppingListId = userShoppingListsRef.document().getId();
-                    ShoppingListModel shoppingListModel = new ShoppingListModel(shoppingListId, inputText, user_name);
-                    userShoppingListsRef.document(shoppingListId).set(shoppingListModel).addOnSuccessListener(aVoid -> Log.d("TAG", "Shopping List successfully created!"));
+
+                  ShoppingListModel newList =  createList(inputText);
+
+                  /*  if user presses create button edit list activity is created  */
                     Intent editListActivity = new Intent(getApplicationContext(),EditListActivity.class);
                     editListActivity.putExtra("name", inputText );
-                    editListActivity.putExtra("shoppingList", shoppingListModel );
                     startActivity(editListActivity);
-                    //finish();
-
 
                 }
 
@@ -90,5 +89,16 @@ public class CreateListActivity extends AppCompatActivity {
         });
     }
 
+    /*  create new list and insert into DB using users email */
+    public ShoppingListModel createList(String name) {
+        userShoppingListsRef = rootRef.collection("shoppingLists").document(fUser.getEmail()).collection("userShoppingLists");
+        String shoppingListId = userShoppingListsRef.document().getId();
+        ShoppingListModel shoppingListModel = new ShoppingListModel(shoppingListId, name, user_name);
+        userShoppingListsRef.document(shoppingListId).set(shoppingListModel).addOnSuccessListener(aVoid -> Log.d("TAG", "Shopping List successfully created!"));
+        return shoppingListModel;
+
+
+
+    }
 
 }

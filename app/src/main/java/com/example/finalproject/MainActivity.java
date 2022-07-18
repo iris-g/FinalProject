@@ -32,44 +32,64 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends DrawerBaseActivity {
+
+    //widgets
     ActivityMainBinding activityMainBinding;
-    AppDataBase db;
     ListView listView;
     TextView textView;
-    List<String> shoppingList;
+    Button addBtn ;
     ViewModel model;
+
+    //vars
+    List<String> shoppingList;
+    HashMap<String, String> listsData;//a map to save list name as key with list id as value
+    String user_name=null;
+    ArrayList<Type> mArrayList =new ArrayList<Type>();
+
+    //firebase
     private CollectionReference userShoppingListsRef;
     private FirebaseFirestore rootRef;
-    String user_name=null;
     private FirebaseAuth.AuthStateListener authStateListener;
+    FirebaseAuth auth ;
+    FirebaseFirestore db;
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-    ArrayList<Type> mArrayList =new ArrayList<Type>();
     Map<String, Object> dataMap = new HashMap<>();
     ArrayAdapter<String> adapter;
-    FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseUser fUser;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
-        final String[] s = new String[1];
-        allocateActivityTitle(" ");
-      setContentView(activityMainBinding.getRoot());
+        setContentView(activityMainBinding.getRoot());
+        //widgets
         textView= findViewById(R.id.textView);
         listView = findViewById(R.id.list_view);
+        addBtn = findViewById(R.id.btn_add);
+
+        final String[] s = new String[1];
+        allocateActivityTitle(" ");
+
+
         model = new ViewModelProvider(this).get(ViewModel.class);
-        shoppingList= new ArrayList<>();
-        db  = AppDataBase.getDbInstance(this.getApplicationContext());
-        listDao listDao = db.listDao();
+        shoppingList= new ArrayList<String>();
+        listsData = new HashMap<String, String>();
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
         rootRef = FirebaseFirestore.getInstance();
-        String emailAdd = null;
         //get currently connected user
-        FirebaseUser fUser = auth.getCurrentUser();
+        fUser = auth.getCurrentUser();
+        //a refernce to users shopping lists
         userShoppingListsRef = rootRef.collection("shoppingLists").document(  fUser.getEmail()).collection("userShoppingLists");
         String shoppingListId = userShoppingListsRef.document().getId();
         FirebaseFirestore  dataBase = FirebaseFirestore.getInstance();
-        //load users lists from database
-        getData( fUser.getEmail());
 
+        //load users lists from database
+        getData(fUser.getEmail());
+
+        //set adapter
         adapter=new ArrayAdapter<String>(getApplicationContext(),R.layout.listview_color_and_text, R.id.item_text, shoppingList);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -84,30 +104,25 @@ public class MainActivity extends DrawerBaseActivity {
             }
         });
 
+        /* on long click remove list from DB and update array adapter  */
+
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            int pos, long id) {
                 String sList = shoppingList.get(pos);
-                ShoppingList toRemove = new ShoppingList();
-               // shoppingList.remove( lists.size()-1);
-                toRemove.name=sList;
-                db.listDao().deleteLists(toRemove);
-                adapter.notifyDataSetChanged();
+                deleteList(sList);
                 return false;
             }
 
         });
 
-
-        Button addBtn = findViewById(R.id.btn_add);
-        String finalEmailAdd = emailAdd;
+        /*  id add button pressed open the create list activity  */
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                     Intent ListActivity = new Intent(getApplicationContext(),CreateListActivity.class);
-                       ListActivity.putExtra("email", finalEmailAdd);
-                   startActivity(ListActivity);
+                    startActivity(ListActivity);
                     //finish();
                 }
 
@@ -126,32 +141,46 @@ public class MainActivity extends DrawerBaseActivity {
 //        toast.setView(layout);
 //        toast.show();
     }
-private void getData(String email){
-   FirebaseFirestore db = FirebaseFirestore.getInstance();
-   db.collection("shoppingLists").document(email).collection("userShoppingLists").get().addOnCompleteListener(new OnCompleteListener <QuerySnapshot>(){
 
+    /*  get all users shopping lists using his email and update adapter*/
+    private void getData(String email){
 
-       @Override
-       public void onComplete(@NonNull Task<QuerySnapshot> task) {
-           if(task.isSuccessful()){
-               for(QueryDocumentSnapshot doc :task.getResult())
-               {
-                   dataMap=doc.getData();
-                   shoppingList.add(String.valueOf(dataMap.get("shoppingListName")));
-                 Log.d("Tag","on complete"+doc.getData())  ;
+       db.collection("shoppingLists").document(email).collection("userShoppingLists").get().addOnCompleteListener(new OnCompleteListener <QuerySnapshot>(){
+
+           @Override
+           public void onComplete(@NonNull Task<QuerySnapshot> task) {
+               if(task.isSuccessful()){
+                   for(QueryDocumentSnapshot doc :task.getResult())
+                   {
+                       dataMap=doc.getData();
+                       /*  insert into list data the lists name with lists id as value */
+                       listsData.put(String.valueOf(dataMap.get("shoppingListName")),String.valueOf(dataMap.get("shoppingListId")));
+                       shoppingList.add(String.valueOf(dataMap.get("shoppingListName")));
+                     Log.d("Tag","on complete"+doc.getData())  ;
+                   }
+                   adapter.notifyDataSetChanged();
+                   textView.setText("Create new list or view lists");
+
                }
-               adapter.notifyDataSetChanged();
-               textView.setText("Create new list or view lists");
+               else{
+                   Log.d("Tag",task.getException().getMessage())  ;
 
+               }
            }
-           else{
-               Log.d("Tag",task.getException().getMessage())  ;
-
-           }
-       }
-   });
+       });
 
 
-}
+    }
+
+    /*remove list from DB and update adapter */
+    private void deleteList(String lName){
+        String listId =listsData.get(lName);
+        db.collection("shoppingLists").document(fUser.getEmail()).collection("userShoppingLists").document(listId).delete();
+        shoppingList.remove(lName);
+        adapter.notifyDataSetChanged();
+
+
+
+    }
 
 }

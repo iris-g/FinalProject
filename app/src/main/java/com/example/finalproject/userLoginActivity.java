@@ -20,14 +20,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class userLoginActivity extends AppCompatActivity {
-        Button login ;
-        Button signUp ;
-        TextInputEditText email;
-        TextInputEditText password;
-        int userId;
-        AppDataBase db;
-        FirebaseAuth auth;
-        private LoginTable getAllData;
+
+    //widgets
+    Button login ;
+    Button signUp ;
+    TextInputEditText email;
+    TextInputEditText password;
+    //vars
+    int userId;
+    String[] emailStr ;
+    String [] passwordStr;
+    //firebase
+    FirebaseAuth auth;
+    FirebaseDatabase  database;
+    private LoginTable getAllData;
+    DatabaseReference root;
+    FirebaseUser fUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,15 +44,16 @@ public class userLoginActivity extends AppCompatActivity {
         email=findViewById(R.id.userEmail);
         password=findViewById(R.id.password);
         signUp=findViewById(R.id.sign_up);
-        final String[] emailStr = new String [1];
-        final   String [] passwordStr=new String [1];
-        db  = AppDataBase.getDbInstance(this.getApplicationContext());
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-         // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference root = database.getReference();
+
+        auth = FirebaseAuth.getInstance();
+        database= FirebaseDatabase.getInstance();
+        root = database.getReference();
         root.setValue("user");
 
+        emailStr = new String [1];
+        passwordStr=new String [1];
+
+        /*   set login on click listener         */
         login.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -58,27 +67,9 @@ public class userLoginActivity extends AppCompatActivity {
                    password.setError("Please Enter Your Password");
                 }
                 else {
-                    //check if email and password are correct
 
-                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                        FirebaseUser fUser = auth.getCurrentUser();
-                        auth.signInWithEmailAndPassword(emailStr[0],passwordStr[0]).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()){
-                                    Toast.makeText(userLoginActivity.this, "User logged in successfully", Toast.LENGTH_SHORT).show();
-                                    Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
-                                    mainActivity.putExtra("email", email.getText().toString() );
-                                    mainActivity.putExtra("name",fUser.getDisplayName());
-
-                                    startActivity(mainActivity);
-                                }else{
-                                    Toast.makeText(userLoginActivity.this, "Log in Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-
-
+                    /*  perform firebase authentication and create new Activity if successful    */
+                     setupFirebaseAuth();
 
                    }
 
@@ -101,6 +92,34 @@ public class userLoginActivity extends AppCompatActivity {
 
             }
         });
+
+
+    }
+    /*
+          ----------------------------- Firebase setup ---------------------------------
+       */
+    private void setupFirebaseAuth(){
+
+        auth.signInWithEmailAndPassword(emailStr[0],passwordStr[0]).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+
+                    Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                    fUser = auth.getCurrentUser();
+                    Toast.makeText(userLoginActivity.this, "Welcome " +fUser.getDisplayName(), Toast.LENGTH_SHORT).show();
+                    mainActivity.putExtra("email", email.getText().toString() );
+                    mainActivity.putExtra("name",fUser.getDisplayName());
+
+                    startActivity(mainActivity);
+                }else{
+                    Toast.makeText(userLoginActivity.this, "Log in Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+
 
     }
 }
