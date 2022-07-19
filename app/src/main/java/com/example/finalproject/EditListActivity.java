@@ -1,14 +1,21 @@
 package com.example.finalproject;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,6 +57,7 @@ public class EditListActivity extends DrawerBaseActivity {
     TextView items;
     CheckBox chkYourCheckBox;
 
+    Dialog dialog;
     /**in order to bind the drawer(side menu)*/
     ActivityMain1Binding activityMain1Binding;
 
@@ -124,18 +132,21 @@ public class EditListActivity extends DrawerBaseActivity {
             @Override
             public void onClick(View view) {
 
-                /*create dialog for adding items*/
-                AlertDialog.Builder builder = new AlertDialog.Builder(EditListActivity.this);
-                View mView =  getLayoutInflater().inflate(R.layout.dialog, null);
-                final EditText name_input = (EditText) mView.findViewById(R.id.item_name);
-                final EditText data_input = (EditText) mView.findViewById(R.id.description_data);
-                name_input.setInputType(InputType.TYPE_CLASS_TEXT );
-                data_input.setInputType(InputType.TYPE_CLASS_TEXT );
-                builder.setCancelable(false);
-                builder.setView(mView);
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                dialog = new Dialog(EditListActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog);
+
+                /**New item name*/
+                final EditText name_input = dialog.findViewById(R.id.item_name);
+
+                /**New item description*/
+                final EditText data_input = dialog.findViewById(R.id.description_data);
+
+                /**add item button*/
+                final ImageButton okBtn = dialog.findViewById(R.id.ok_button);
+                okBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(View v) {
                         dialog.dismiss();
                             name[0] = name_input.getText().toString();
                             additionalData[0] = data_input.getText().toString();
@@ -144,12 +155,14 @@ public class EditListActivity extends DrawerBaseActivity {
                             adapter.notifyDataSetChanged();
                             /** update items number in live data **/
                             items.setText(String.valueOf(adapter.getItemCount()));
-
                     }
                 });
-                AlertDialog dialog = builder.create();
-                dialog.show();
 
+                dialog.show();
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                dialog.getWindow().setGravity(Gravity.BOTTOM);
             }
         });
 
