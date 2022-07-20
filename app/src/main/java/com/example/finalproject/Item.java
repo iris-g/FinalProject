@@ -5,6 +5,7 @@ public class Item {
     String details;
     String productId;
     String listName;
+    boolean isChecked;
 
 
 
@@ -14,12 +15,16 @@ public class Item {
         this.productId=id;
         this.listName=listName;
     }
+
+    /*
     public Item(String title, String content,String itemId){
         this.name = title;
         this.details=content;
         this.productId=itemId;
 
     }
+    */
+
 
     public Item() {
     }
@@ -53,6 +58,13 @@ public class Item {
         this.listName = listName;
     }
 
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 
 
 

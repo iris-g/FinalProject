@@ -1,33 +1,25 @@
 package com.example.finalproject;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalproject.databinding.ActivityMain1Binding;
-import com.example.finalproject.databinding.ActivityMainBinding;
-import com.example.finalproject.databinding.ActivityUserSettingsBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -55,7 +47,7 @@ public class EditListActivity extends DrawerBaseActivity {
     EditText itemDescription;
     TextView listName;
     TextView items;
-    CheckBox chkYourCheckBox;
+
 
     Dialog dialog;
     /**in order to bind the drawer(side menu)*/
@@ -91,6 +83,7 @@ public class EditListActivity extends DrawerBaseActivity {
         itemDescription=findViewById(R.id.description_data);
         itemName= findViewById(R.id.item_name);
         mParentLayout = findViewById(android.R.id.content);
+
 
         //vars
         name = new String[1];
@@ -166,6 +159,7 @@ public class EditListActivity extends DrawerBaseActivity {
             }
         });
 
+
     }
 
 
@@ -187,7 +181,8 @@ public class EditListActivity extends DrawerBaseActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    adapter.updateItemsList(name[0], additionalData[0],productId);
+                    Item i = new Item(name[0], additionalData[0],productId,lName);
+                    adapter.updateItemsList(i);
                     makeSnackBarMessage("Created new item");
 
                 }
@@ -213,9 +208,10 @@ public class EditListActivity extends DrawerBaseActivity {
                     for(QueryDocumentSnapshot doc :task.getResult())
                     {
                         dataMap=doc.getData();
-                        Item item = new Item(String.valueOf(dataMap.get("name")), String.valueOf(dataMap.get("details")),String.valueOf(dataMap.get("itemId")));
+                        Item item = new Item(String.valueOf(dataMap.get("name")), String.valueOf(dataMap.get("details")),String.valueOf(dataMap.get("productId")), String.valueOf(dataMap.get("listName")));
+                        item.setChecked((Boolean) dataMap.get("checked"));
                         itemsList.add(item);
-                        adapter.updateItemsList(item.getName(),item.getDetails(), String.valueOf(dataMap.get("productId")));
+                        adapter.updateItemsList(item);
                         Log.d("Tag","on complete"+doc.getData())  ;
                     }
                     adapter.notifyDataSetChanged();

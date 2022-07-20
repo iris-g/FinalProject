@@ -1,12 +1,13 @@
 package com.example.finalproject;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,9 @@ import androidx.lifecycle.ViewModelStore;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -32,9 +36,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     CollectionReference itemsRef;
     TextView items;
     FirebaseFirestore rootRef;
-
+    ArrayList<String> checkBoxes = new ArrayList<>();
     SharedPreferences app_preferences;
     int appColor;
+    FirebaseAuth auth;
 
     public RecyclerViewAdapter(ViewModel model, Context context) {
         this.model= new ViewModelProvider((FragmentActivity)context).get(ViewModel.class);
@@ -46,6 +51,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         model.getItemsCount();
 
         rootRef = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
     }
 
     @NonNull
@@ -60,9 +66,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return null;
     }
 
-    public void updateItemsList(String name, String description, String itemID ) {
+    public void updateItemsList(Item item ) {
 
-         shownItems.add(shownItems.size(), new Item(name,description,itemID));
+         shownItems.add(shownItems.size(), item);
         notifyDataSetChanged();
     }
 
@@ -89,7 +95,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.bindData(position);
         holder.itemView.setSelected(selectedPos == position);
         selectedPos=model.getSelectedRow().getValue();
-        //int current = model.getSelectedRow().getValue();
+        CheckBox chkYourCheckBox ;
+        chkYourCheckBox= holder.itemView.findViewById(R.id.checkBox);
+        Item item = shownItems.get(position);
+        chkYourCheckBox.setChecked(item.isChecked);
+
+
+        chkYourCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                if(chkYourCheckBox.isChecked()) {
+                    updateCheckedState(item,true);
+
+                }
+                else  {
+                    updateCheckedState(item,false);
+                }
+
+
+            }
+
+        });
         if(selectedPos == position)
             holder.itemView.setBackgroundColor(Color.WHITE);
         else
@@ -107,6 +134,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         View itemView;
 
 
+
         ViewHolder(View itemView) {
             super(itemView);
             this.itemView =itemView;
@@ -114,6 +142,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tvName = (TextView)itemView.findViewById(R.id.name);
             tvShort=(TextView)itemView.findViewById(R.id.shorty);
             itemView.setOnClickListener(this);
+
+
 
         }
 
@@ -143,8 +173,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             Item item1 = shownItems.get(position);
            deleteItem(item1.getProductId());
             String name = item1.name;
-           // Items item=db.listDao().getItem(name);
-           // db.listDao().deleteItem(item);
+
             shownItems.remove(item1);
             model.setItems(shownItems);
             model.setItemsCount(shownItems.size());
@@ -159,6 +188,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             notifyItemChanged(selectedPos);
             selectedPos = getLayoutPosition();
+
+
             //update live data
             model.setSelectedRow(selectedPos);
             notifyItemChanged(selectedPos);
@@ -169,15 +200,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         itemsRef=  rootRef.collection("products");
         // where we are storing our items
         itemsRef. document(itemId).delete();
-                // after that we are getting the document
-                // which we have to delete.
-                // after passing the document id we are calling
-                // delete method to delete this document.
-
-
-
-
-
 
     }
+
+    /** update checked field in data base  **/
+    public void updateCheckedState(Item item , boolean val) {
+
+        /** get reference to products collection  **/
+        itemsRef = rootRef.collection("products");
+         String  productId = item.getProductId();
+        /** update checked=val in  db  **/
+        itemsRef.document(productId).update("checked",val).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                }
+                else{
+
+                }
+            }
+        });
+    }
+
 }
