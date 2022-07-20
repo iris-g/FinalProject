@@ -1,6 +1,7 @@
 package com.example.finalproject;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ public class EditListActivity extends DrawerBaseActivity {
     ViewModel model;
     RecyclerView rvItems;
     Button addBtn ;
+    ImageButton sendBtn;
     EditText itemName;
     EditText itemDescription;
     TextView listName;
@@ -82,6 +84,7 @@ public class EditListActivity extends DrawerBaseActivity {
         listName=findViewById(R.id.list_name);
         itemDescription=findViewById(R.id.description_data);
         itemName= findViewById(R.id.item_name);
+        sendBtn= findViewById(R.id.sendBtn);
         mParentLayout = findViewById(android.R.id.content);
 
 
@@ -158,8 +161,16 @@ public class EditListActivity extends DrawerBaseActivity {
                 dialog.getWindow().setGravity(Gravity.BOTTOM);
             }
         });
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Intent sharingActivity = new Intent(getApplicationContext(),SharingListActivity.class);
+                sharingActivity.putExtra("list",lName);
+                startActivity(sharingActivity);
 
+            }
+        });
     }
 
 
