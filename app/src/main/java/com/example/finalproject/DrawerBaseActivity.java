@@ -85,8 +85,8 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
                 startActivity(userLogin);
                 break;
             case R.id.nav_friends:
-                Intent sharingActivity = new Intent(getApplicationContext(),SharingListActivity.class);
-                startActivity(sharingActivity);
+                Intent friendsActivity = new Intent(getApplicationContext(),FriendsActivity.class);
+                startActivity(friendsActivity);
                 break;
 
 

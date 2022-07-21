@@ -8,9 +8,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ShareCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -28,6 +31,7 @@ import java.util.Map;
 
 public class SharingListActivity extends AppCompatActivity {
     Button emailBtn ;
+    Button sendBtn;
     FirebaseFirestore rootRef;
     private String userEmail;
     FirebaseAuth auth;
@@ -36,17 +40,23 @@ public class SharingListActivity extends AppCompatActivity {
     String shoppingListId;
     private CollectionReference itemsRef;
     Map<String, Object> dataMap = new HashMap<>();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    String friendEmail;
+    private CollectionReference mRequestReference;
+    public static final String FOLLOW_REQUEST_SENT_NOTIFICATION = "FOLLOW_REQUEST_SENT_NOTIFICATION";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sharing_layout);
         emailBtn = findViewById(R.id.email_btn);
+        sendBtn=findViewById(R.id.send_button);
         rootRef =FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         fUser=auth.getCurrentUser();
         ViewModel model  = new ViewModelProvider(this).get(ViewModel.class);
         userEmail= fUser.getEmail();
-
+        mRequestReference = rootRef.collection("Requests");
         /** get reference to products collection  **/
         itemsRef = rootRef.collection("products");
 
@@ -61,7 +71,7 @@ public class SharingListActivity extends AppCompatActivity {
                 {
                     String lName=(String) bundle.get("list");
                     shoppingListId=getShoppingListId(lName);
-
+                 //   sendNotification("Hello world");
 
                 }
 
@@ -70,6 +80,36 @@ public class SharingListActivity extends AppCompatActivity {
             }
 
         });
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                try {
+//                    Intent i = new Intent(Intent.ACTION_SEND);
+//                    i.setType("text/plain");
+//                    i.putExtra(Intent.EXTRA_SUBJECT, "My app name");
+//                    String strShareMessage = "\nLet me recommend you this application\n\n";
+//                    strShareMessage = strShareMessage + "https://play.google.com/store/apps/details?id=" + getPackageName();
+//                    Uri screenshotUri = Uri.parse("android.resource://packagename/drawable/image_name");
+//                    i.setType("image/png");
+//                    i.putExtra(Intent.EXTRA_STREAM, screenshotUri);
+//                    i.putExtra(Intent.EXTRA_TEXT, strShareMessage);
+//                    startActivity(Intent.createChooser(i, "Share via"));
+                    ShareCompat.IntentBuilder.from(SharingListActivity.this)
+                            .setType("text/plain")
+                            .setChooserTitle("Chooser title")
+                            .setText("http://play.google.com/store/apps/details?id=" + SharingListActivity.this.getPackageName())
+                            .startChooser();
+                } catch(Exception e) {
+                    //e.toString();
+                }
+
+            }
+
+
+        });
+
     }
 
     private void shareShoppingList() {
@@ -84,7 +124,7 @@ public class SharingListActivity extends AppCompatActivity {
         builder.setView(editText);
 
         builder.setPositiveButton("Add", (dialogInterface, i) -> {
-            String friendEmail = editText.getText().toString().trim();
+            friendEmail = editText.getText().toString().trim();
             rootRef.collection("shoppingLists").document(friendEmail)
                     .collection("userShoppingLists").document(shoppingListId)
                     .set(shoppingList).addOnSuccessListener(aVoid -> {
@@ -100,16 +140,16 @@ public class SharingListActivity extends AppCompatActivity {
                                 .collection("userShoppingLists").document(shoppingListId)
                                 .update(users);
                     });
+            notificationForFollowRequest(userEmail,friendEmail);
         });
 
         builder.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss());
-
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
     /** get all items in a list by lists name   **/
     private String getShoppingListId(String listName){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         FirebaseUser fUser = auth.getCurrentUser();
         FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
         final String[] listId = new String[1];
@@ -132,6 +172,7 @@ public class SharingListActivity extends AppCompatActivity {
 
 
 
+
                 }
                 else{
                     Log.d("Tag",task.getException().getMessage())  ;
@@ -143,4 +184,27 @@ public class SharingListActivity extends AppCompatActivity {
     return listId[0];
 
     }
+
+    private void notificationForFollowRequest(final String currentUserId, final String otherUserId){
+
+        Map<String, Object> notificationMap = new HashMap<>();
+        notificationMap.put("name",auth.getCurrentUser().getDisplayName());
+        notificationMap.put("from",currentUserId);
+
+        db.collection("Users/"+otherUserId+"/Notifications")
+                .add(notificationMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        if (task.isSuccessful()){
+                            Toast.makeText(SharingListActivity.this,"Notification sent",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(SharingListActivity.this,"Failed to send notification",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+    }
+
+
+
 }

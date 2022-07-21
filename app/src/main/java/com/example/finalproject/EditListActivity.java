@@ -79,7 +79,7 @@ public class EditListActivity extends DrawerBaseActivity {
 
         //widgets
         addBtn = findViewById(R.id.add_btn);
-        rvItems=findViewById(R.id.recycler_view);
+        rvItems=findViewById(R.id.recycler_view1);
         items=findViewById(R.id.items_num);
         listName=findViewById(R.id.list_name);
         itemDescription=findViewById(R.id.description_data);

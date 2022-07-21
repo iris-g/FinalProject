@@ -1,16 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="70dp"
+    android:layout_alignParentTop="false"
+    android:backgroundTint="@android:color/transparent">
 
-    <TextView
-        android:id="@+id/itemTextView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="47dp"
-        android:layout_gravity="center|left"
-        android:textStyle="bold|italic" />
+        android:layout_height="wrap_content">
 
-</LinearLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="11dp"
+            android:layout_marginBottom="11dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
+
+            <TextView
+                android:id="@+id/card_color"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:background="@color/t_green" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="86dp"
+                    android:layout_height="match_parent"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/shorty"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentBottom="false"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginRight="100dp"
+                    android:fontFamily="@font/quicksand_light"
+                    android:text="name sample"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/shorty"
+                    android:layout_width="237dp"
+                    android:layout_height="17dp"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="false"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="77dp"
+                    android:layout_marginEnd="78dp"
+                    android:layout_marginBottom="2dp"
+                    android:fontFamily="@font/quicksand_light"
+                    android:text="short description sample"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+</RelativeLayout>
