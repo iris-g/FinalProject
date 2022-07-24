@@ -45,7 +45,6 @@ public class userLoginActivity extends AppCompatActivity {
         email=findViewById(R.id.userEmail);
         password=findViewById(R.id.password);
         signUp=findViewById(R.id.sign_up);
-
         auth = FirebaseAuth.getInstance();
         database= FirebaseDatabase.getInstance();
         root = database.getReference();

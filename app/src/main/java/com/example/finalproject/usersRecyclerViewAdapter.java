@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
@@ -20,20 +22,31 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class usersRecyclerViewAdapter extends RecyclerView.Adapter<usersRecyclerViewAdapter.myViewHolder> implements ViewModelStoreOwner, LifecycleOwner {
     usersViewModel model;
+    ImageView deleteIcon;
+    //vars
     Context context;
     ArrayList<User> shownUsers;
-    CollectionReference usersRef;
+
+    //firebase
     FirebaseFirestore rootRef;
+    CollectionReference usersRef;
     SharedPreferences app_preferences;
     int appColor;
     private int selectedPos =  RecyclerView.NO_POSITION;;
     FirebaseAuth auth;
+
 
 
 
@@ -71,6 +84,7 @@ public class usersRecyclerViewAdapter extends RecyclerView.Adapter<usersRecycler
         View itemView=inflater.inflate(R.layout.item_view,parent,false);
 
 
+
         /**getting the selected color by user from the SP*/
         app_preferences = context.getSharedPreferences("UserSettingsActivity", Context.MODE_PRIVATE);
         appColor = app_preferences.getInt("color", -9516113);
@@ -92,7 +106,7 @@ public class usersRecyclerViewAdapter extends RecyclerView.Adapter<usersRecycler
         CheckBox chkYourCheckBox ;
         chkYourCheckBox= holder.itemView.findViewById(R.id.checkBox);
         User user = shownUsers.get(position);
-       // chkYourCheckBox.setChecked(item.isChecked);
+        // chkYourCheckBox.setChecked(item.isChecked);
 
 
 
@@ -120,6 +134,7 @@ public class usersRecyclerViewAdapter extends RecyclerView.Adapter<usersRecycler
             itemView.setClickable(true);
             tvName = (TextView)itemView.findViewById(R.id.name);
             tvShort=(TextView)itemView.findViewById(R.id.shorty);
+            deleteIcon=itemView.findViewById(R.id.delete);
             itemView.setOnClickListener(this);
 
 
@@ -139,6 +154,19 @@ public class usersRecyclerViewAdapter extends RecyclerView.Adapter<usersRecycler
 
 
             }
+            deleteIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    notifyDataSetChanged();
+                    User user = shownUsers.get(position);
+                    /*   delete friend from data base  */
+                    deleteUser(user.getName());
+                    String name = user.name;
+                    /*   remove friend from shown users in recycler view */
+                    shownUsers.remove(user);
+                    model.setUsers(shownUsers);
+                }
+            });
             itemView.setOnLongClickListener(new View.OnLongClickListener()
             {
                 @Override
@@ -155,18 +183,19 @@ public class usersRecyclerViewAdapter extends RecyclerView.Adapter<usersRecycler
 
         }
         private void OnItemLongClick(int position) {
-            notifyDataSetChanged();
-            User user = shownUsers.get(position);
-           // deleteItem(user.getProductId());
-            String name = user.name;
-
-            shownUsers.remove(user);
-            model.setUsers(shownUsers);
-            model.setItemsCount(shownUsers.size());
-            notifyDataSetChanged();
-            model.setSelectedRow(-1);
-            notifyItemChanged(selectedPos);
-            notifyDataSetChanged();
+//            notifyDataSetChanged();
+//            User user = shownUsers.get(position);
+//            /*   delete friend from data base  */
+//            deleteUser(user.getName());
+//            String name = user.name;
+//            /*   remove friend from shown users in recycler view */
+//            shownUsers.remove(user);
+//            model.setUsers(shownUsers);
+//            model.setItemsCount(shownUsers.size());
+//            notifyDataSetChanged();
+//            model.setSelectedRow(-1);
+//            notifyItemChanged(selectedPos);
+//            notifyDataSetChanged();
         }
 
         @Override
@@ -184,6 +213,26 @@ public class usersRecyclerViewAdapter extends RecyclerView.Adapter<usersRecycler
 
 
 
+    /*   delete a user from friends list using a query that finds that user by its name  */
+    public void deleteUser(String userName) {
+        rootRef.collection("Users/"+auth.getCurrentUser().getEmail()+"/Notifications")
+                // where we are storing our items
+                .whereEqualTo("name",userName) .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (value != null && !value.getDocuments().isEmpty()) {
+                            List<DocumentSnapshot> documents = value.getDocuments();
+                            for (DocumentSnapshot document : documents) {
+                                DocumentReference documentReference = document.getReference();
+                                documentReference.delete();
+                            }
+                        }
+                    }
+                });;
+
+
+
+    }
 
 
 }

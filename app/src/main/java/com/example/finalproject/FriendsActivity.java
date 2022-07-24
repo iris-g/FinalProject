@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,7 +18,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -40,6 +45,7 @@ public class FriendsActivity extends AppCompatActivity  {
     TextView msgText;
     String from ;
     ArrayList<User>  friends = new ArrayList<>();
+    DocumentReference docRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,24 +62,26 @@ public class FriendsActivity extends AppCompatActivity  {
         getFreindsRequests(auth.getCurrentUser().getEmail());
 
 
-//        final DocumentReference docRef = db.collection("Users").document(auth.getCurrentUser().getEmail());
-//        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-//
-//                if (error != null) {
-//                    Log.w("TAG", "Listen failed.", error);
-//                    return;
-//                }
-//
-//                if (value != null && value.exists()) {
-//                    Log.d("TAG", "Current data: " + value.getData());
-//                    startService("You have a friend request from ");
-//                } else {
-//                    Log.d("TAG", "Current data: null");
-//                }
-//            }
-//        });
+        docRef = db.collection("Users").document(auth.getCurrentUser().getEmail());
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                if (error != null) {
+                    Log.w("TAG", "Listen failed.", error);
+                    return;
+                }
+
+                if (value != null && value.exists()) {
+                    Log.d("TAG", "Current data: " + value.getData());
+
+
+                    startService("You have a friend request from ");
+                } else {
+                    Log.d("TAG", "Current data: null");
+                }
+            }
+        });
 
 
     }
@@ -97,13 +105,13 @@ public class FriendsActivity extends AppCompatActivity  {
                             {
                                 dataMap=doc.getData();
 
-                               // adapter.updateUsersList(new User(String.valueOf(dataMap.get("name")), String.valueOf(dataMap.get("from"))));
+                                // adapter.updateUsersList(new User(String.valueOf(dataMap.get("name")), String.valueOf(dataMap.get("from"))));
                                 friends.add(new User(String.valueOf(dataMap.get("name")), String.valueOf(dataMap.get("from")))) ;
                                 from=String.valueOf(dataMap.get("from"));
                                 Log.d("Tag","on complete"+doc.getData())  ;
                             }
                             for(int i=0; i <friends.size();i++)
-                            adapter.updateUsersList(friends.get(i));
+                                adapter.updateUsersList(friends.get(i));
                             adapter.notifyDataSetChanged();
                             msgText.setText("");
                         }

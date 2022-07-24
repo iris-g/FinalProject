@@ -56,6 +56,7 @@ public class MainActivity extends DrawerBaseActivity {
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
     Map<String, Object> dataMap = new HashMap<>();
     ArrayAdapter<String> adapter;
+    HashMap<String, String> createdData =new HashMap<>();//a map to save list name as key with list creator as value
     FirebaseUser fUser;
 
 
@@ -93,31 +94,12 @@ public class MainActivity extends DrawerBaseActivity {
 
         //set adapter
         adapter=new ArrayAdapter<String>(getApplicationContext(),R.layout.listview_color_and_text, R.id.item_text, shoppingList);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                String list = shoppingList.get(position);
-                Intent edit = new Intent(getApplicationContext(),EditListActivity.class);
-                edit.putExtra("name", list );
+//        listView.setAdapter(new customAdapter(this, array
+//        ));
 
-                startActivity(edit);
-            }
-        });
 
         /* on long click remove list from DB and update array adapter  */
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int pos, long id) {
-                String sList = shoppingList.get(pos);
-                deleteList(sList);
-                return false;
-            }
-
-        });
 
         /*  id add button pressed open the create list activity  */
         addBtn.setOnClickListener(new View.OnClickListener() {
@@ -157,9 +139,37 @@ public class MainActivity extends DrawerBaseActivity {
                        dataMap=doc.getData();
                        /*  insert into list data the lists name with lists id as value */
                        listsData.put(String.valueOf(dataMap.get("shoppingListName")),String.valueOf(dataMap.get("shoppingListId")));
+                       createdData.put(String.valueOf(dataMap.get("shoppingListName")),String.valueOf(dataMap.get("createdBy")));
                        shoppingList.add(String.valueOf(dataMap.get("shoppingListName")));
                      Log.d("Tag","on complete"+doc.getData())  ;
                    }
+                   adapter.notifyDataSetChanged();
+                   String[] array = shoppingList.toArray(new String[0]);
+                   listView.setAdapter(new customAdapter(getApplicationContext(), array,createdData ));
+                   listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                       @Override
+                       public void onItemClick(AdapterView<?> parent, View view,
+                                               int position, long id) {
+                           String list = shoppingList.get(position);
+                           Intent edit = new Intent(getApplicationContext(),EditListActivity.class);
+                           edit.putExtra("name", list );
+
+                           startActivity(edit);
+                       }
+                   });
+                   listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                       @Override
+                       public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                                      int pos, long id) {
+                           String sList = shoppingList.get(pos);
+                           deleteList(sList);
+                           adapter.notifyDataSetChanged();
+
+                           return true;
+                       }
+
+                   });
+
                    adapter.notifyDataSetChanged();
                    textView.setText("Create new list or view lists");
 
@@ -179,6 +189,7 @@ public class MainActivity extends DrawerBaseActivity {
         String listId =listsData.get(lName);
         db.collection("shoppingLists").document(fUser.getEmail()).collection("userShoppingLists").document(listId).delete();
         shoppingList.remove(lName);
+        getData(fUser.getEmail());
         adapter.notifyDataSetChanged();
 
 

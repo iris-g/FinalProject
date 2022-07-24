@@ -93,7 +93,7 @@ public class CreateListActivity extends AppCompatActivity {
     public ShoppingListModel createList(String name) {
         userShoppingListsRef = rootRef.collection("shoppingLists").document(fUser.getEmail()).collection("userShoppingLists");
         String shoppingListId = userShoppingListsRef.document().getId();
-        ShoppingListModel shoppingListModel = new ShoppingListModel(shoppingListId, name, user_name);
+        ShoppingListModel shoppingListModel = new ShoppingListModel(shoppingListId, name, fUser.getDisplayName());
         userShoppingListsRef.document(shoppingListId).set(shoppingListModel).addOnSuccessListener(aVoid -> Log.d("TAG", "Shopping List successfully created!"));
         return shoppingListModel;
 
