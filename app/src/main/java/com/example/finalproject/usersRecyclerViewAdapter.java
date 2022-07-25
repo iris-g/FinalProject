@@ -125,6 +125,7 @@ public class usersRecyclerViewAdapter extends RecyclerView.Adapter<usersRecycler
         TextView tvName;
         TextView tvShort;
         View itemView;
+        ImageView image;
 
 
 
@@ -135,6 +136,7 @@ public class usersRecyclerViewAdapter extends RecyclerView.Adapter<usersRecycler
             tvName = (TextView)itemView.findViewById(R.id.name);
             tvShort=(TextView)itemView.findViewById(R.id.shorty);
             deleteIcon=itemView.findViewById(R.id.delete);
+            image=itemView.findViewById(R.id.imageView4);
             itemView.setOnClickListener(this);
 
 
@@ -149,6 +151,7 @@ public class usersRecyclerViewAdapter extends RecyclerView.Adapter<usersRecycler
                 if (user.getName() != null && user.getEmail() != null) {
                     tvName.setText(user.getName());
                     tvShort.setText(user.getEmail());
+
                 }
             }catch(Exception e){
 

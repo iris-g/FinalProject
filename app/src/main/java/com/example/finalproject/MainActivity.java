@@ -72,15 +72,17 @@ public class MainActivity extends DrawerBaseActivity {
         listView = findViewById(R.id.list_view);
         addBtn = findViewById(R.id.btn_add);
 
-        final String[] s = new String[1];
         allocateActivityTitle(" ");
-
-
         model = new ViewModelProvider(this).get(ViewModel.class);
+
+        //vars
         shoppingList= new ArrayList<String>();
         listsData = new HashMap<String, String>();
-        auth = FirebaseAuth.getInstance();
+        final String[] s = new String[1];
+
+        //firebase
         db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
         rootRef = FirebaseFirestore.getInstance();
         //get currently connected user
         fUser = auth.getCurrentUser();
@@ -88,6 +90,10 @@ public class MainActivity extends DrawerBaseActivity {
         userShoppingListsRef = rootRef.collection("shoppingLists").document(  fUser.getEmail()).collection("userShoppingLists");
         String shoppingListId = userShoppingListsRef.document().getId();
         FirebaseFirestore  dataBase = FirebaseFirestore.getInstance();
+
+        //START foreground service- listen to friend notifications
+        Intent serviceIntent = new Intent(this.getBaseContext(),ForegroundService.class);
+        this.getBaseContext().startService(serviceIntent);
 
         //load users lists from database
         getData(fUser.getEmail());
@@ -98,32 +104,18 @@ public class MainActivity extends DrawerBaseActivity {
 //        ));
 
 
-        /* on long click remove list from DB and update array adapter  */
 
-
-        /*  id add button pressed open the create list activity  */
+        /* if add button pressed open the create list activity  */
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                     Intent ListActivity = new Intent(getApplicationContext(),CreateListActivity.class);
                     startActivity(ListActivity);
-                    //finish();
+
                 }
 
         });
-    //}
 
-    //    public void showToast()
-//    {
-//        LayoutInflater layoutInflater = getLayoutInflater();
-//        View layout = layoutInflater.inflate(R.layout.toast_layout,
-//                (ViewGroup) findViewById(R.id.toast_root));
-//
-//        Toast toast = new Toast(getApplicationContext());
-//        toast.setGravity(Gravity.CENTER,0,0);
-//        toast.setDuration(Toast.LENGTH_LONG);
-//        toast.setView(layout);
-//        toast.show();
     }
 
     /*  get all users shopping lists using his email and update adapter*/
@@ -146,6 +138,7 @@ public class MainActivity extends DrawerBaseActivity {
                    adapter.notifyDataSetChanged();
                    String[] array = shoppingList.toArray(new String[0]);
                    listView.setAdapter(new customAdapter(getApplicationContext(), array,createdData ));
+                   /* on long click remove list from DB and update array adapter  */
                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                        @Override
                        public void onItemClick(AdapterView<?> parent, View view,

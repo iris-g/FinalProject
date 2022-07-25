@@ -73,7 +73,7 @@ public class UserSignUp extends AppCompatActivity {
                                         User user = new User(strName, strEmail);
                                         ref.child("Users").child(fUser.getUid()).setValue(user);
                                         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
+                                        //set and store user display name
                                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                                 .setDisplayName(strName).build();
 
@@ -90,7 +90,9 @@ public class UserSignUp extends AppCompatActivity {
                                         Toast.makeText(UserSignUp.this, "User registered successfully", Toast.LENGTH_SHORT).show();
                                         Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(mainActivity);
+
                                     }
+
 
                                     else {
                                         Context context = getApplicationContext();

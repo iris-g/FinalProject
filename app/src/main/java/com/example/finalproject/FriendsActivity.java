@@ -35,17 +35,20 @@ public class FriendsActivity extends AppCompatActivity  {
     //widgets
     usersRecyclerViewAdapter adapter;
     RecyclerView rvItems;
-    List<User> userList;
-    usersViewModel model;
-    FirebaseAuth auth;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    Map<String, Object> dataMap = new HashMap<>();
-    FirebaseDatabase dataBase ;
-    DatabaseReference ref;
     TextView msgText;
+    usersViewModel model;
+
+    //vars
+    Map<String, Object> dataMap = new HashMap<>();
+    List<User> userList;
     String from ;
     ArrayList<User>  friends = new ArrayList<>();
-    DocumentReference docRef;
+
+    //fire base
+    FirebaseAuth auth;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseDatabase dataBase ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,27 +64,6 @@ public class FriendsActivity extends AppCompatActivity  {
         msgText.setText("No friends yet");
         getFreindsRequests(auth.getCurrentUser().getEmail());
 
-
-        docRef = db.collection("Users").document(auth.getCurrentUser().getEmail());
-        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-
-                if (error != null) {
-                    Log.w("TAG", "Listen failed.", error);
-                    return;
-                }
-
-                if (value != null && value.exists()) {
-                    Log.d("TAG", "Current data: " + value.getData());
-
-
-                    startService("You have a friend request from ");
-                } else {
-                    Log.d("TAG", "Current data: null");
-                }
-            }
-        });
 
 
     }
@@ -127,15 +109,7 @@ public class FriendsActivity extends AppCompatActivity  {
     }
 
 
-    public void startService(String value) {
-        Intent serviceIntent = new Intent(this, ForegroundService.class);
-        serviceIntent.putExtra("inputExtra", value);
-        ContextCompat.startForegroundService(this, serviceIntent);
-    }
-    public void stopService() {
-        Intent serviceIntent = new Intent(this, ForegroundService.class);
-        stopService(serviceIntent);
-    }
+
 
 
 
