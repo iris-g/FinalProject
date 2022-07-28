@@ -82,7 +82,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="253dp"
                     android:layout_toRightOf="@id/imageView4"
-                    android:tint="#009688"
+                    app:tint="#C4C4C4"
                     app:srcCompat="@drawable/ic_delete" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>

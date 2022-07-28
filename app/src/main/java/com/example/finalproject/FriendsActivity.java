@@ -1,28 +1,21 @@
 package com.example.finalproject;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.finalproject.databinding.ActivityFriendsBinding;
+import com.example.finalproject.databinding.ActivityMainBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -31,7 +24,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FriendsActivity extends AppCompatActivity  {
+public class FriendsActivity extends DrawerBaseActivity  {
+
+    ActivityFriendsBinding activityFriendsBinding;
+
     //widgets
     usersRecyclerViewAdapter adapter;
     RecyclerView rvItems;
@@ -52,7 +48,10 @@ public class FriendsActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.friends_layout);
+
+        activityFriendsBinding = ActivityFriendsBinding.inflate(getLayoutInflater());
+        setContentView(activityFriendsBinding.getRoot());
+
         rvItems=findViewById(R.id.recycler_view1);
         msgText=findViewById(R.id.message);
         auth = FirebaseAuth.getInstance();

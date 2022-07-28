@@ -82,18 +82,6 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/login" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        android:fontFamily="@font/nexa_bold"
-        android:text="Forgot Password?"
-        app:layout_constraintBottom_toTopOf="@+id/logIn_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.304" />
-
     <androidx.cardview.widget.CardView
         android:layout_width="390dp"
         android:layout_height="wrap_content"

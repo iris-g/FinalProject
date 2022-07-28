@@ -13,19 +13,21 @@
         android:backgroundTint="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.933" />
+        app:layout_constraintVertical_bias="0.735" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/friends_TextView"
         android:layout_width="242dp"
         android:layout_height="60dp"
-        android:fontFamily="@font/quicksand_light"
         android:gravity="center"
         android:text="friends"
-        android:textSize="48sp"
+        android:fontFamily="@font/quicksand_regular"
+        android:textColor="#000000"
+        android:textSize="44sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/recycler_view1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.561"
@@ -39,6 +41,7 @@
         android:layout_height="25dp"
         android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/recycler_view1"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
-        tools:layout_editor_absoluteX="104dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/friends_TextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

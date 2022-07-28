@@ -57,8 +57,10 @@ public class UserSettingsActivity extends DrawerBaseActivity {
     TextView userName;
     EditText editUser;
     FirebaseAuth auth;
+
     SharedPreferences app_preferences;
     SharedPreferences.Editor editor;
+
     int appColor;
 
     CircleImageView fromGallery , fromCamera;
@@ -89,10 +91,10 @@ public class UserSettingsActivity extends DrawerBaseActivity {
         /**finding 'btnEditName'*/
         btnEditName = findViewById(R.id.btnEditName);
 
-
-
+        /**finding 'userNameTextView'*/
         /**get userName from DB and set textView'*/
         userName=findViewById(R.id.userNameTextView);
+
         auth = FirebaseAuth.getInstance();
         fUser = auth.getCurrentUser();
         String usersName = fUser.getDisplayName();
@@ -305,12 +307,15 @@ public class UserSettingsActivity extends DrawerBaseActivity {
         i.setAction(Intent.ACTION_GET_CONTENT);
 
         startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+
+
     }
 
     private void pickImageFromCamera() {
         Intent i = new Intent();
        i.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(Intent.createChooser(i, "take Picture"), REQUEST_IMAGE_CAPTURE);
+
 
 
     }
@@ -377,5 +382,12 @@ public class UserSettingsActivity extends DrawerBaseActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("color",appColor);
         editor.apply();
+
+        /**refreshing the activity so the nav drawer will updated also
+         * (border color, image , user name)*/
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(getIntent());
+        overridePendingTransition(0, 0);
     }
 }
