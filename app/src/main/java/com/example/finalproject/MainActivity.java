@@ -1,6 +1,7 @@
 package com.example.finalproject;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -58,6 +59,7 @@ public class MainActivity extends DrawerBaseActivity {
     ArrayAdapter<String> adapter;
     HashMap<String, String> createdData =new HashMap<>();//a map to save list name as key with list creator as value
     FirebaseUser fUser;
+     static  boolean isFirstTime=true;
 
 
     @Override
@@ -91,18 +93,30 @@ public class MainActivity extends DrawerBaseActivity {
         String shoppingListId = userShoppingListsRef.document().getId();
         FirebaseFirestore  dataBase = FirebaseFirestore.getInstance();
 
-        //START foreground service- listen to friend notifications
-        Intent serviceIntent = new Intent(this.getBaseContext(),ForegroundService.class);
-        this.getBaseContext().startService(serviceIntent);
+
+        /*  if activity is created the first time START foreground service- listen to friend notifications  */
+        if (isFirstTime) {
+            //the app is being launched for first time, do something
+            Log.d("TAG", "First time");
+            //START foreground service- listen to friend notifications
+            Intent serviceIntent = new Intent(this.getBaseContext(),ForegroundService.class);
+            this.getBaseContext().startService(serviceIntent);
+            // first time task
+            // record the fact that the app has been started at least once
+            isFirstTime=false;
+        }
+        else
+        {
+
+            //second time launch..
+        }
+
 
         //load users lists from database
         getData(fUser.getEmail());
 
         //set adapter
         adapter=new ArrayAdapter<String>(getApplicationContext(),R.layout.listview_color_and_text, R.id.item_text, shoppingList);
-//        listView.setAdapter(new customAdapter(this, array
-//        ));
-
 
 
         /* if add button pressed open the create list activity  */

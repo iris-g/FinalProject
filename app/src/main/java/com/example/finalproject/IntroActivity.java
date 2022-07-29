@@ -36,7 +36,7 @@ public class IntroActivity extends AppCompatActivity {
         super.onResume();
 
         //check if this is the first time the user runs the app if yes show him the intro
-        if (prefs.getBoolean("firstrun", true)) {
+//        if (prefs.getBoolean("firstrun", true)) {
             // Do first run stuff here then set 'firstrun' as false
             ViewPager2 viewPager2 = findViewById(R.id.viewPager);
             Button nextBtn = findViewById(R.id.btn_next);
@@ -66,8 +66,8 @@ public class IntroActivity extends AppCompatActivity {
             skipBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent mainActivity = new Intent(getApplicationContext(),MainActivity.class);
-                    startActivity(mainActivity);
+                    Intent loginActivity = new Intent(getApplicationContext(), userLoginActivity.class);
+                    startActivity(loginActivity);
 
                     //   savePrefsData();
 
@@ -77,13 +77,12 @@ public class IntroActivity extends AppCompatActivity {
             nextBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int index=viewPager2.getCurrentItem() + 1;
-                    viewPager2.setCurrentItem( index, true);
+                    int index = viewPager2.getCurrentItem() + 1;
+                    viewPager2.setCurrentItem(index, true);
 
                     /* if we reached last intro screen and next pressed open main layout  */
-                    if(index == 3)
-                    {
-                        Intent loginActivity = new Intent(getApplicationContext(),userLoginActivity.class);
+                    if (index == 3) {
+                        Intent loginActivity = new Intent(getApplicationContext(), userLoginActivity.class);
                         startActivity(loginActivity);
                         //  Intent mainActivity = new Intent(getApplicationContext(),MainActivity.class);
                         //   startActivity(mainActivity);
@@ -105,15 +104,17 @@ public class IntroActivity extends AppCompatActivity {
             viewPager2.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
             // using the following line to edit/commit prefs
             prefs.edit().putBoolean("firstrun", false).commit();
-        }
-        else {
-            Intent userLogin = new Intent(getApplicationContext(),userLoginActivity.class);
-            startActivity(userLogin);
+
 
         }
+//        else {
+//            Intent userLogin = new Intent(getApplicationContext(),userLoginActivity.class);
+//            startActivity(userLogin);
+//
+//        }
 
 
-    }
+
 
 
 }

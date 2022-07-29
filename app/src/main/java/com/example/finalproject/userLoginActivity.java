@@ -110,7 +110,6 @@ public class userLoginActivity extends AppCompatActivity {
                     Toast.makeText(userLoginActivity.this, "Welcome " +fUser.getDisplayName(), Toast.LENGTH_SHORT).show();
                     mainActivity.putExtra("email", email.getText().toString() );
                     mainActivity.putExtra("name",fUser.getDisplayName());
-
                     startActivity(mainActivity);
                 }else{
                     Toast.makeText(userLoginActivity.this, "Log in Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();

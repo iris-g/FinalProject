@@ -39,6 +39,7 @@ public class ForegroundService extends Service {
     String message = null;
     Context context;
     PendingIntent pendingIntent;
+    boolean initState = true;
 
     @Override
         public void onCreate() {
@@ -62,24 +63,27 @@ public class ForegroundService extends Service {
                         Log.w("TAG", "Listen failed.", error);
                         return;
                     }
-                    for (DocumentChange dc : value.getDocumentChanges()) {
-                        switch (dc.getType()) {
-                            case ADDED:
-                                System.out.println("You became friend with "+ "now you can share lists together!");
-                                notification = new NotificationCompat.Builder(context, CHANNEL_ID)
-                                        .setContentTitle("New friend")
-                                        .setContentText("You became friends with: " + dc.getDocument().getData().get("name") + " now you can share lists together!")
-                                        .setSmallIcon(R.drawable.ic_baseline_people_24)
-                                        .setContentIntent(pendingIntent)
-                                        .setStyle(new NotificationCompat.BigTextStyle()
-                                                .bigText("You became friends with: " + dc.getDocument().getData().get("name") + " now you can share lists together!"))
-                                        .build();
-                                startForeground(1, notification);
+                    if (initState) {
+                        initState = false;
+                    } else {
+                        for (DocumentChange dc : value.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                        System.out.println("You became friend with " + "now you can share lists together!");
+                                    notification = new NotificationCompat.Builder(context, CHANNEL_ID)
+                                            .setContentTitle("New friend")
+                                            .setContentText("You became friends with: " + dc.getDocument().getData().get("name") + " now you can share lists together!")
+                                            .setSmallIcon(R.drawable.ic_baseline_people_24)
+                                            .setContentIntent(pendingIntent)
+                                            .setStyle(new NotificationCompat.BigTextStyle()
+                                                    .bigText("You became friends with: " + dc.getDocument().getData().get("name") + " now you can share lists together!"))
+                                            .build();
+                                    startForeground(1, notification);
+                                default:
+                                    break;
+                            }
 
-                            default:
-                                break;
                         }
-
                     }
                 }
             });
