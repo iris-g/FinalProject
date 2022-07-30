@@ -62,9 +62,6 @@ public class MainActivity extends DrawerBaseActivity {
     FirebaseUser fUser;
     static  boolean isFirstTime=true;
 
-    final NetworkBroadcastReceiver br= new NetworkBroadcastReceiver();
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -192,21 +189,6 @@ public class MainActivity extends DrawerBaseActivity {
        });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        /**DYNAMIC REGISTRATION (run-time)*/
-        /**to Network availability*/
-        IntentFilter filter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
-        this.registerReceiver(br, filter);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        unregisterReceiver(br);
-    }
 
     /*remove list from DB and update adapter */
     private void deleteList(String lName){

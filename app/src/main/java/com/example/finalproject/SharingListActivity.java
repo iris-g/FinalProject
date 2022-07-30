@@ -1,6 +1,7 @@
 package com.example.finalproject;
 
 import android.app.AlertDialog;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
@@ -48,6 +49,7 @@ public class SharingListActivity extends AppCompatActivity {
     private CollectionReference mRequestReference;
     public static final String FOLLOW_REQUEST_SENT_NOTIFICATION = "FOLLOW_REQUEST_SENT_NOTIFICATION";
 
+    final NetworkBroadcastReceiver br= new NetworkBroadcastReceiver();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -200,7 +202,24 @@ public class SharingListActivity extends AppCompatActivity {
                     }
                 });
     }
-        public void showToast(){
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        /**DYNAMIC REGISTRATION (run-time)*/
+        /**to Network availability*/
+        IntentFilter filter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+        this.registerReceiver(br, filter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(br);
+    }
+
+    public void showToast(){
         LayoutInflater layoutInflater = getLayoutInflater();
         View layout = layoutInflater.inflate(R.layout.toast_layout,
         (ViewGroup) findViewById(R.id.toast_root));

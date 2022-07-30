@@ -26,8 +26,8 @@
     <TextView
         android:id="@+id/userNameTextView"
         android:layout_width="239dp"
-        android:layout_height="29dp"
-        android:fontFamily="@font/nexa_thin"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand_light"
         android:text="name from db"
         android:textAlignment="center"
         android:textColor="#000000"
