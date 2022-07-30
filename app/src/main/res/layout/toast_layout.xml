@@ -21,6 +21,7 @@
             android:id="@+id/toast_text"
             android:layout_width="176dp"
             android:layout_height="67dp"
+            android:fontFamily="@font/quicksand_medium"
             android:text="Ivitation has been sent successfully!"
             android:textAlignment="center"
             android:textColor="#FFFFFF"

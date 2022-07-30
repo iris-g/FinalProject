@@ -48,14 +48,14 @@
         android:textColor="#000000"
         android:textSize="44sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/user_image_small"
+        app:layout_constraintBottom_toTopOf="@+id/user_image_big"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/user_image_small"
+        android:id="@+id/user_image_big"
         android:layout_width="240dp"
         android:layout_height="240dp"
         android:layout_centerInParent="true"
@@ -147,11 +147,11 @@
         android:backgroundTint="#C4C4C4"
         android:src="@drawable/ic_camera"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/user_image_small"
-        app:layout_constraintEnd_toEndOf="@+id/user_image_small"
+        app:layout_constraintBottom_toBottomOf="@+id/user_image_big"
+        app:layout_constraintEnd_toEndOf="@+id/user_image_big"
         app:layout_constraintHorizontal_bias="0.924"
-        app:layout_constraintStart_toStartOf="@+id/user_image_small"
-        app:layout_constraintTop_toTopOf="@+id/user_image_small"
+        app:layout_constraintStart_toStartOf="@+id/user_image_big"
+        app:layout_constraintTop_toTopOf="@+id/user_image_big"
         app:layout_constraintVertical_bias="1.0" />
 
     <View
@@ -175,7 +175,7 @@
         app:layout_constraintEnd_toStartOf="@+id/userNameTextView"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_image_small"
+        app:layout_constraintTop_toBottomOf="@+id/user_image_big"
         app:layout_constraintVertical_bias="0.351"
         app:srcCompat="@drawable/ic_edit" />
 

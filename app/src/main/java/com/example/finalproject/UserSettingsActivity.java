@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,6 +39,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+
+import java.io.ByteArrayOutputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -65,7 +69,6 @@ public class UserSettingsActivity extends DrawerBaseActivity {
 
     CircleImageView fromGallery , fromCamera;
 
-
     /**firebase*/
     FirebaseUser fUser ;
     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -81,8 +84,13 @@ public class UserSettingsActivity extends DrawerBaseActivity {
         app_preferences = this.getSharedPreferences("UserSettingsActivity", Context.MODE_PRIVATE);
         appColor = app_preferences.getInt("color", -9516113);
 
+        String uri = "@drawable/android_avatar";
+        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+        Drawable res = getResources().getDrawable(imageResource);
+
         /**finding the user profile picture*/
-        userImg = findViewById(R.id.user_image_small);
+        userImg = findViewById(R.id.user_image_big);
+        userImg.setImageDrawable(res);
         userImg.setBorderColor(appColor);
 
         /**finding 'btnAddPic'*/
@@ -104,7 +112,7 @@ public class UserSettingsActivity extends DrawerBaseActivity {
         /**get users picture from DB and update image'*/
         if (currentUser.getPhotoUrl() != null) {
             userImg.setImageURI(Uri.parse(String.valueOf(currentUser.getPhotoUrl())));
-        }
+       }
 
         /**finding the color buttons*/
         btnOrange = findViewById(R.id.btnOrange);
@@ -132,7 +140,21 @@ public class UserSettingsActivity extends DrawerBaseActivity {
                     @Override
                     public void onClick(View v) {
                        userImg.setImageResource(R.drawable.android_avatar);
-                        dialog.dismiss();
+                        Uri path = Uri.parse("android.resource://com.example.finalproject/" + R.drawable.android_avatar);
+                        /**firebase*/
+                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setPhotoUri(path).build();
+                        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                        currentUser.updateProfile(profileUpdates)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Log.d("TAG", "User profile updated.");
+                                        }
+                                    }
+                                });
+
+                       dialog.dismiss();
                     }
                 });
 
@@ -307,17 +329,12 @@ public class UserSettingsActivity extends DrawerBaseActivity {
         i.setAction(Intent.ACTION_GET_CONTENT);
 
         startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
-
-
     }
 
     private void pickImageFromCamera() {
         Intent i = new Intent();
        i.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(Intent.createChooser(i, "take Picture"), REQUEST_IMAGE_CAPTURE);
-
-
-
+       startActivityForResult(Intent.createChooser(i, "take Picture"), REQUEST_IMAGE_CAPTURE);
     }
 
 
@@ -353,6 +370,8 @@ public class UserSettingsActivity extends DrawerBaseActivity {
                 String picturePath = getPath( UserSettingsActivity.this, selectedImageUri );
                 if (null != selectedImageUri) {
                     userImg.setImageURI(Uri.parse(picturePath));
+
+                    /**firebase*/
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setPhotoUri(Uri.parse(picturePath)).build();
                     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                     currentUser.updateProfile(profileUpdates)
@@ -366,14 +385,30 @@ public class UserSettingsActivity extends DrawerBaseActivity {
                             });
                 }
             }
-            if (requestCode == 100) {
+            if (requestCode == REQUEST_IMAGE_CAPTURE) {
                 Bitmap bitmap = (Bitmap)data.getExtras().get("data");
                 if (null != bitmap) {
                     userImg.setImageBitmap(bitmap);
+
+                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG,100,bytes);
+                    String path = MediaStore.Images.Media.insertImage(getApplicationContext().getContentResolver(),bitmap,"val",null);
+                    /**firebase*/
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setPhotoUri(Uri.parse(path)).build();
+                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                    currentUser.updateProfile(profileUpdates)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("TAG", "User profile updated.");
+                                    }
+                                }
+                            });
+                    /**end of firebase*/
                 }
             }
             dialog.dismiss();
-
         }
     }
 

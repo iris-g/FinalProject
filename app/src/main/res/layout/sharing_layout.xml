@@ -68,15 +68,5 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:clickable="true"
-            app:backgroundTint="#7086D4"
-            app:srcCompat="@drawable/ic_send_foreground" />
-
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

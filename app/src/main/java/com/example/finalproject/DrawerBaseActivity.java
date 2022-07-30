@@ -3,6 +3,7 @@ package com.example.finalproject;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.MenuItem;
@@ -79,9 +80,16 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
 
         View headerView = navigationView.getHeaderView(0);
 
+        String uri = "@drawable/android_avatar";
+        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+        Drawable res = getResources().getDrawable(imageResource);
+
         /**finding the user profile picture*/
         userImg = headerView.findViewById(R.id.user_image_small);
+        userImg.setImageDrawable(res);
         userImg.setBorderColor(appColor);
+
+
 
         /**finding the user name*/
         userName = headerView.findViewById(R.id.user_name_small);
@@ -123,8 +131,6 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
                 Intent friendsActivity = new Intent(getApplicationContext(),FriendsActivity.class);
                 startActivity(friendsActivity);
                 break;
-
-
         }
         return false;
     }

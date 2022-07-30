@@ -5,7 +5,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -169,20 +172,14 @@ public class SharingListActivity extends AppCompatActivity {
                     shoppingListId=listId[0];
                     shoppingList = new ShoppingListModel(listId[0],listName, fUser.getDisplayName());
                     shareShoppingList();
-
-
-
-
                 }
                 else{
                     Log.d("Tag",task.getException().getMessage())  ;
-
                 }
             }
         });
 
     return listId[0];
-
     }
 
     private void notificationForFollowRequest(final String currentUserId, final String otherUserId){
@@ -196,15 +193,23 @@ public class SharingListActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful()){
-                            Toast.makeText(SharingListActivity.this,"Notification sent",Toast.LENGTH_SHORT).show();
+                            showToast();
                         } else {
                             Toast.makeText(SharingListActivity.this,"Failed to send notification",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-
     }
+        public void showToast(){
+        LayoutInflater layoutInflater = getLayoutInflater();
+        View layout = layoutInflater.inflate(R.layout.toast_layout,
+        (ViewGroup) findViewById(R.id.toast_root));
 
-
-
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.BOTTOM,0,0);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+    }
 }
+
