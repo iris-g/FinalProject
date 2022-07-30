@@ -1,6 +1,7 @@
 package com.example.finalproject;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,7 +60,9 @@ public class MainActivity extends DrawerBaseActivity {
     ArrayAdapter<String> adapter;
     HashMap<String, String> createdData =new HashMap<>();//a map to save list name as key with list creator as value
     FirebaseUser fUser;
-     static  boolean isFirstTime=true;
+    static  boolean isFirstTime=true;
+
+    final NetworkBroadcastReceiver br= new NetworkBroadcastReceiver();
 
 
     @Override
@@ -187,8 +190,22 @@ public class MainActivity extends DrawerBaseActivity {
                }
            }
        });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        /**DYNAMIC REGISTRATION (run-time)*/
+        /**to Network availability*/
+        IntentFilter filter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+        this.registerReceiver(br, filter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(br);
     }
 
     /*remove list from DB and update adapter */
