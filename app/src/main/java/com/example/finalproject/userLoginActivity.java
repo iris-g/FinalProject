@@ -24,38 +24,43 @@ public class userLoginActivity extends AppCompatActivity {
 
     //widgets
     Button login ;
+
     TextView signUp;
     TextInputEditText email;
     TextInputEditText password;
+
     //vars
     int userId;
     String[] emailStr ;
     String [] passwordStr;
+
     //firebase
     FirebaseAuth auth;
     FirebaseDatabase  database;
     private LoginTable getAllData;
     DatabaseReference root;
     FirebaseUser fUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
         login= findViewById(R.id.logIn_button);
         email=findViewById(R.id.userEmail);
         password=findViewById(R.id.password);
         signUp=findViewById(R.id.sign_up);
+
         auth = FirebaseAuth.getInstance();
         database= FirebaseDatabase.getInstance();
         root = database.getReference();
         root.setValue("user");
 
-        emailStr = new String [1];
-        passwordStr=new String [1];
+        emailStr = new String[1];
+        passwordStr=new String[1];
 
-        /*   set login on click listener         */
+        /**set login 'on click' listener*/
         login.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 emailStr[0] =email.getText().toString();
@@ -70,30 +75,18 @@ public class userLoginActivity extends AppCompatActivity {
 
                     /*  perform firebase authentication and create new Activity if successful    */
                      setupFirebaseAuth();
-
                    }
-
-
-
                 }
-
-
-
         });
 
 
-
         signUp.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 Intent userSignup = new Intent(getApplicationContext(),UserSignUp.class);
                 startActivity(userSignup);
-
             }
         });
-
-
     }
     /*
           ----------------------------- Firebase setup ---------------------------------
@@ -110,6 +103,8 @@ public class userLoginActivity extends AppCompatActivity {
                     Toast.makeText(userLoginActivity.this, "Welcome " +fUser.getDisplayName(), Toast.LENGTH_SHORT).show();
                     mainActivity.putExtra("email", email.getText().toString() );
                     mainActivity.putExtra("name",fUser.getDisplayName());
+
+                    /**starting the main activity*/
                     startActivity(mainActivity);
                 }else{
                     Toast.makeText(userLoginActivity.this, "Log in Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();

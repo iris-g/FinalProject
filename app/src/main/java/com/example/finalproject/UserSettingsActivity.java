@@ -393,6 +393,7 @@ public class UserSettingsActivity extends DrawerBaseActivity {
                     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG,100,bytes);
                     String path = MediaStore.Images.Media.insertImage(getApplicationContext().getContentResolver(),bitmap,"val",null);
+
                     /**firebase*/
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setPhotoUri(Uri.parse(path)).build();
                     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();

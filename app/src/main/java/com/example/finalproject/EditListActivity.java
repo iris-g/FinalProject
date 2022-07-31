@@ -100,6 +100,7 @@ public class EditListActivity extends DrawerBaseActivity {
         //create and set adapter for recycler view
         adapter = new RecyclerViewAdapter(model,this);
         rvItems.setAdapter(adapter);
+
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvItems.setLayoutManager(manager);
 
@@ -111,10 +112,8 @@ public class EditListActivity extends DrawerBaseActivity {
             lName=(String) bundle.get("name");
             listName.setText(lName);
 
-            //check if list llready has items in DB
+            //check if list already has items in DB
             getListItems(lName);
-
-
         }
 
         // Update the UI if number of items changed using live data

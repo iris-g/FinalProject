@@ -83,6 +83,7 @@ public class MainActivity extends DrawerBaseActivity {
         final String[] s = new String[1];
 
         //firebase
+        /**reference to the main DB, not a specific table*/
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         rootRef = FirebaseFirestore.getInstance();
@@ -117,7 +118,6 @@ public class MainActivity extends DrawerBaseActivity {
 
         //set adapter
         adapter=new ArrayAdapter<String>(getApplicationContext(),R.layout.listview_color_and_text, R.id.item_text, shoppingList);
-
 
         /* if add button pressed open the create list activity  */
         addBtn.setOnClickListener(new View.OnClickListener() {
@@ -183,7 +183,6 @@ public class MainActivity extends DrawerBaseActivity {
                }
                else{
                    Log.d("Tag",task.getException().getMessage())  ;
-
                }
            }
        });
@@ -197,9 +196,6 @@ public class MainActivity extends DrawerBaseActivity {
         shoppingList.remove(lName);
         getData(fUser.getEmail());
         adapter.notifyDataSetChanged();
-
-
-
     }
 
 }

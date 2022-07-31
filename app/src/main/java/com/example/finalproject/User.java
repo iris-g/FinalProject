@@ -6,7 +6,7 @@ package com.example.finalproject;
         public String name;
         public String email;
 
-// need empty constractor
+   /**need empty constractor*/
 
         public User()
         {}

@@ -54,8 +54,6 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
         Toolbar toolbar = drawerLayout.findViewById(R.id.myToolBar);
         setSupportActionBar(toolbar);
 
-
-
         /**HOME button*/
         homeBtn = drawerLayout.findViewById(R.id.homeButton);
         homeBtn.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +86,6 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
         userImg = headerView.findViewById(R.id.user_image_small);
         userImg.setImageDrawable(res);
         userImg.setBorderColor(appColor);
-
 
 
         /**finding the user name*/
@@ -135,11 +132,6 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
         return false;
     }
 
-
-
-
-
-
     //    @Override
     public void onBackPressed() {
         //if the drawer is open
@@ -158,7 +150,6 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
             getSupportActionBar().setTitle(titleString);
         }
     }
-
 
 
     private void signOut(){

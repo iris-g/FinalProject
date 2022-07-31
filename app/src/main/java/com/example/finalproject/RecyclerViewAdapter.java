@@ -37,8 +37,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     TextView items;
     FirebaseFirestore rootRef;
     ArrayList<String> checkBoxes = new ArrayList<>();
+
     SharedPreferences app_preferences;
     int appColor;
+
     FirebaseAuth auth;
 
     public RecyclerViewAdapter(ViewModel model, Context context) {

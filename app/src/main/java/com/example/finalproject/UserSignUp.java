@@ -28,6 +28,7 @@ public class UserSignUp extends AppCompatActivity {
     EditText name;
     EditText email;
     EditText password;
+
     Button signUp ;
     private LoginTable userData;
 
@@ -35,22 +36,33 @@ public class UserSignUp extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /**setting the content to "Sign Up" activity (new user want to register)*/
         setContentView(R.layout.sign_up);
+
+        /**finding all of the widgets in the layout*/
+        /**edit text fields*/
         name=findViewById(R.id.name_txt);
         email= findViewById(R.id.txtEmailAddress);
         password=findViewById(R.id.txtPassword);
+
+        /**sign up button*/
         signUp=findViewById(R.id.signUp);
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
       //  FirebaseDatabase ref = FirebaseDatabase.getInstance();
-        signUp.setOnClickListener(new View.OnClickListener() {
 
+        /**setting listener to "Sign Up" button*/
+        signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //trim() - removes whitespace from both ends of a string
                 String strEmail = email.getText().toString().trim();
-                String strPassword = password .getText().toString().trim();
+                String strPassword = password.getText().toString().trim();
                 String strName = name.getText().toString();
+
                 LoginTable data = new LoginTable();
+
+                /**checking for empty fields in 'Sign Up' form*/
 
                 if (TextUtils.isEmpty(strEmail)) {
                   email.setError("Please Enter Your E-mail Address");
@@ -64,15 +76,27 @@ public class UserSignUp extends AppCompatActivity {
                 else {
 
                     FirebaseAuth auth = FirebaseAuth.getInstance();
+
+                    /**creating new user with email & password*/
                     auth.createUserWithEmailAndPassword(strEmail,strPassword).addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                                     if (task.isSuccessful()) {
+                                        /**getting the current logged-in user*/
                                         FirebaseUser fUser = auth.getCurrentUser();
+
+                                        /**User is a class defined by us*/
                                         User user = new User(strName, strEmail);
+
+                                        /**DatabaseReference ref*/
+                                        /**red.child("Users") creates a table called 'Users'*/
+                                        /**getUid() - getting the currently logged-in user*/
+
+                                        /**we are setting a value to 'User' struct */
                                         ref.child("Users").child(fUser.getUid()).setValue(user);
                                         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
                                         //set and store user display name
                                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                                 .setDisplayName(strName).build();
@@ -89,8 +113,9 @@ public class UserSignUp extends AppCompatActivity {
 
                                         Toast.makeText(UserSignUp.this, "User registered successfully", Toast.LENGTH_SHORT).show();
                                         Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
-                                        startActivity(mainActivity);
 
+                                        /**starting the main activity*/
+                                        startActivity(mainActivity);
                                     }
 
 
@@ -134,8 +159,5 @@ public class UserSignUp extends AppCompatActivity {
                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(strName).build();
             }
         });
-
-
     }
-
 }

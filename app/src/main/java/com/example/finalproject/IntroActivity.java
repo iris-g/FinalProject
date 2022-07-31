@@ -18,8 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IntroActivity extends AppCompatActivity {
+
+    ViewPager2 viewPager2;
     Button skipBtn;
+    Button nextBtn;
+
     SharedPreferences prefs = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +32,6 @@ public class IntroActivity extends AppCompatActivity {
 
         //get SP of the app
         prefs = getSharedPreferences("com.example.finalproject", MODE_PRIVATE);
-
-
     }
 
     @Override
@@ -36,10 +39,10 @@ public class IntroActivity extends AppCompatActivity {
         super.onResume();
 
         //check if this is the first time the user runs the app if yes show him the intro
-//        if (prefs.getBoolean("firstrun", true)) {
-            // Do first run stuff here then set 'firstrun' as false
-            ViewPager2 viewPager2 = findViewById(R.id.viewPager);
-            Button nextBtn = findViewById(R.id.btn_next);
+        // if (prefs.getBoolean("firstrun", true)) {
+        /**Do first run stuff here then set 'firstrun' as false */
+            viewPager2 = findViewById(R.id.viewPager);
+            nextBtn = findViewById(R.id.btn_next);
             skipBtn = findViewById(R.id.btn_get_started);
 
             final List<ViewPagerItem> mList = new ArrayList<>();
@@ -112,9 +115,4 @@ public class IntroActivity extends AppCompatActivity {
 //            startActivity(userLogin);
 //
 //        }
-
-
-
-
-
 }
