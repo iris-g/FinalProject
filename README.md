@@ -1,6 +1,7 @@
 # Shared Shopping List App
 
 This is a shared shopping list app designed to help users easily collaborate on grocery shopping lists. The app is built using Java programming language, Android Studio, and Google Firebase.
+
 ![welcomeScreen](welcomeScreen.jpg)
 ## Features
 Create and edit shopping lists
